@@ -1,6 +1,7 @@
 import * as Diff from 'diff';
 import { targetTypes } from './mock/types/target';
 import { sourceTypes } from './mock/types/source';
+import generateTypeSql from './typeGeneration';
 
 export type Definitions = 'Types'
   | 'Functions'
@@ -11,34 +12,17 @@ export type Definitions = 'Types'
   | 'Sequences'
   | 'Tables';
 
-let scripts: string[] = [];
-
 export const sqlGeneration = (type: Definitions) => {
+  let commands: string[] = [];
   const diff = Diff.diffJson(sourceTypes, targetTypes);
 
   switch (type) {
     case 'Types':
-      generateTypeSql(diff.filter(d => d.added || d.removed), sourceTypes, targetTypes);
+      const filteredDiffs = diff.filter(d => d.added || d.removed);
+      commands = [...commands, ...generateTypeSql(filteredDiffs, sourceTypes, targetTypes)];
+      console.log(commands);
       break;
     default:
       throw Error('');
   }
-};
-
-// @ts-ignore
-const generateTypeSql = (diff: Diff.Change[], sourceTypes: any, targetTypes: any) => {
-  diff.forEach(d => {
-    const names: string[] = [];
-    const values = d.value.split(/[:,]+/);
-    values.forEach((element, i) => element.includes('name') ? names.push(values[i + 1].trim().replace(new RegExp('"', 'g'), '')) : null);
-    if (d.added) {
-    } else {
-      console.log(names);
-      const a = sourceTypes.filter((el: any) => names.includes(el.name.trim()));
-      scripts.push(a.forEach((el: any) => {
-        scripts.push(el.script.trim()); }));
-    }
-  });
-  console.log(scripts);
-
 };
