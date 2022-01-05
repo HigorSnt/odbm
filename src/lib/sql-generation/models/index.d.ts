@@ -12,5 +12,24 @@ export interface Type {
   name: string;
   type: string;
   script: string;
-  grants: Grant[]
+  grants: Grant[];
+}
+
+export interface Argument {
+  id: string;
+  name: string;
+  type: string;
+  inOutType: string;
+  referenceType: string;
+  referenceName: string;
+  referenceMethod: string;
+  referenceMethodId: string;
+}
+
+export interface Function {
+  name: string;
+  status: string;
+  script: string;
+  arguments: Argument[];
+  grants: Grant[];
 }
