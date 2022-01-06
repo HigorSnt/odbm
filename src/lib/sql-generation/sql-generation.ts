@@ -1,4 +1,3 @@
-import * as Diff from 'diff';
 import { targetTypes } from './mock/types/target';
 import { sourceTypes } from './mock/types/source';
 import { sourceFunctions } from './mock/functions/source';
@@ -17,19 +16,17 @@ export type Definitions = 'Types'
 
 export const sqlGeneration = (type: Definitions) => {
   let commands: string[] = [];
-  let diff: Diff.Change[];
-  let filteredDiffs: Diff.Change[];
+  let scripts: string[];
 
   switch (type) {
     case 'Types':
-      const scripts: string[] = generateTypeSql(sourceTypes, targetTypes);
+      scripts = generateTypeSql(sourceTypes, targetTypes);
       commands = commands.concat(scripts);
       console.log(commands);
       break;
     case 'Functions':
-      diff = Diff.diffJson(sourceFunctions, targetFunctions);
-      filteredDiffs = diff.filter(d => d.added || d.removed);
-      commands = commands.concat(generateFunctionSql(filteredDiffs, sourceFunctions, targetFunctions));
+      scripts = generateFunctionSql(sourceFunctions, targetFunctions);
+      console.log(scripts);
       break;
     default:
       throw Error('');

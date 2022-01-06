@@ -41,19 +41,26 @@ const generateTypeSql = (sourceTypes: Type[], targetTypes: Type[]): string[] => 
        *
        */
       values.forEach(value => {
-        if (value.includes('script')) {
+        if (value.includes('"script"')) {
           const splittedValue = value.split(' ');
           const typeTermIndex: number = splittedValue.indexOf(commands.type);
           const schemaAndTypeName: string = splittedValue[typeTermIndex + 1];
 
           const dropScript = `${commands.drop} ${commands.type} ${schemaAndTypeName};`;
           scripts.push(dropScript);
-        } else if (value.includes('grants')) {
-          const [_, grantScript] = value.split(':');
-          const grantScripts: string[] = JSON.parse(grantScript);
-          const grants: Grant[] = targetTypes
-            .map(type => type.grants.filter(grant => grantScripts.includes(grant.script)))
-            .reduce((previous, current) => previous.concat(current));
+        } else if (value.includes(commands.grant)) {
+          const grants: Grant[] = [];
+          if (value.includes('grants')) {
+            const [_, grantScript] = value.split(':');
+            const grantScripts: string[] = JSON.parse(grantScript);
+            grants.concat(targetTypes
+              .map(type => type.grants.filter(grant => grantScripts.includes(grant.script)))
+              .reduce((previous, current) => previous.concat(current)));
+          } else {
+            grants.concat(targetTypes
+              .map(type => type.grants.filter(grant => value.includes(grant.script)))
+              .reduce((previous, current) => previous.concat(current)));
+          }
 
           grants.forEach(grant => {
             const revokeGrant = `${commands.revoke} ${grant.privilege} ${commands.on} ` +
@@ -68,12 +75,20 @@ const generateTypeSql = (sourceTypes: Type[], targetTypes: Type[]): string[] => 
        * The old db has it and the new one doesn't. So we must create in the new.
        */
       values.forEach(value => {
-        if (value.includes('script')) {
+        if (value.includes('"script"')) {
           const [_, script] = value.split(':');
+
           scripts.push(script.trim());
-        } else if (value.includes('grants')) {
-          const [_, grantScript] = value.split(':');
-          const grantScripts: string[] = JSON.parse(grantScript);
+        } else if (value.includes(commands.grant)) {
+          const grantScripts: string[] = [];
+
+          if (value.includes('grants')) {
+            const [_, grantScript] = value.split(':');
+            grantScripts.concat(JSON.parse(grantScript));
+          } else {
+            grantScripts.push(value.trim());
+          }
+
           scripts.concat(grantScripts);
         }
       });
