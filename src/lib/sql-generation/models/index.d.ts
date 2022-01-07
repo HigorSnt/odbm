@@ -33,3 +33,18 @@ export interface Function {
   arguments: Argument[];
   grants: Grant[];
 }
+
+export interface Method {
+  packageName: string;
+  methodId: string;
+  methodName: string;
+  arguments: Argument[];
+}
+
+export interface Package {
+  name: string;
+  status: string;
+  script: string;
+  methods: Method[];
+  grants: Grant[];
+}

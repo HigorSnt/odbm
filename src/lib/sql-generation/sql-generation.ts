@@ -2,8 +2,11 @@ import { targetTypes } from './mock/types/target';
 import { sourceTypes } from './mock/types/source';
 import { sourceFunctions } from './mock/functions/source';
 import { targetFunctions } from './mock/functions/target';
+import { sourcePackages } from './mock/packages/source';
+import { targetPackages } from './mock/packages/target';
 import generateTypeSql from './typeGeneration';
 import generateFunctionSql from './functionGeneration';
+import generatePackageSql from './packageGeneration';
 
 export type Definitions = 'Types'
   | 'Functions'
@@ -26,6 +29,10 @@ export const sqlGeneration = (type: Definitions) => {
       break;
     case 'Functions':
       scripts = generateFunctionSql(sourceFunctions, targetFunctions);
+      console.log(scripts);
+      break;
+    case 'Packages':
+      scripts = generatePackageSql(sourcePackages, targetPackages);
       console.log(scripts);
       break;
     default:
