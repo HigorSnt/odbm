@@ -77,3 +77,59 @@ export interface Trigger {
   status: string;
   script: string;
 }
+
+export interface Procedure {
+  name: string;
+  status: string;
+  script: string;
+  arguments: Argument[];
+  grants: Grant[];
+}
+
+export interface Sequence {
+  name: string;
+  incrementBy: string;
+  cacheSize: string;
+  script: string;
+  minValue: string;
+  maxValue: string;
+  grants: Grant[];
+}
+
+export interface Constraint {
+  owner: string;
+  tableName: string;
+  constraintName: string;
+  relatedColumns: string;
+  constraintType: string;
+  condition: string;
+  relatedOwner: string;
+  relatedConstraintName: string;
+  deleteRule: string;
+  invalid: string;
+  relatedView: string;
+  status: string;
+  validated: string;
+}
+
+export interface Index {
+  indexName: string;
+  tableOwner: string;
+  tableName: string;
+  columns: string;
+  indexType: string;
+  uniqueness: string;
+  compression: string;
+  tablespaceName: string;
+  status: string;
+}
+
+export interface Table {
+  name: string;
+  comment: string;
+  script: string;
+  columns: Column[];
+  indexes: Index[];
+  constraints: Constraint[];
+  grants: Grant[];
+}
