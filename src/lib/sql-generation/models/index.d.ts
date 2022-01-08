@@ -48,3 +48,32 @@ export interface Package {
   methods: Method[];
   grants: Grant[];
 }
+
+export interface Column {
+  id: string;
+  name: string;
+  type: string;
+  nullable: string;
+  comment: string;
+  tableName: string;
+}
+
+export interface View {
+  name: string;
+  status: string;
+  script: string;
+  columns: Column[];
+  grants: Grant[];
+}
+
+export interface Trigger {
+  name: string;
+  type: string;
+  event: string;
+  objectBaseType: string;
+  objectBaseOwner: string;
+  objectBaseName: string;
+  triggerStatus: string;
+  status: string;
+  script: string;
+}

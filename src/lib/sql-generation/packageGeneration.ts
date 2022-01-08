@@ -37,8 +37,8 @@ const generatePackageSql = (sourcePackage: Package[], targetPackage: Package[]):
       values.forEach(value => {
         if (value.includes('"script"')) {
           const splittedValue = value.split(' ');
-          const typeTermIndex: number = splittedValue.indexOf(commands.package);
-          const schemaAndPackageName: string = splittedValue[typeTermIndex + 1];
+          const packageTermIndex: number = splittedValue.indexOf(commands.package);
+          const schemaAndPackageName: string = splittedValue[packageTermIndex + 1];
 
           const dropScript = `${commands.drop} ${commands.package} ${schemaAndPackageName};`;
           scripts.push(dropScript);
@@ -49,11 +49,11 @@ const generatePackageSql = (sourcePackage: Package[], targetPackage: Package[]):
             const [_, grantScript] = value.split(':');
             const grantScripts: string[] = JSON.parse(grantScript);
             grants.concat(targetPackage
-              .map(type => type.grants.filter(grant => grantScripts.includes(grant.script)))
+              .map(pack => pack.grants.filter(grant => grantScripts.includes(grant.script)))
               .reduce((previous, current) => previous.concat(current)));
           } else {
             grants.concat(targetPackage
-              .map(type => type.grants.filter(grant => value.includes(grant.script)))
+              .map(pack => pack.grants.filter(grant => value.includes(grant.script)))
               .reduce((previous, current) => previous.concat(current)));
           }
 
@@ -73,8 +73,8 @@ const generatePackageSql = (sourcePackage: Package[], targetPackage: Package[]):
         if (value.includes('"script"')) {
           const [, script] = value.split(':');
           const splittedScript = script.split(" ");
-          const funtionCommandIndex = splittedScript.indexOf(commands.package);
-          const [, packageName] = splittedScript[funtionCommandIndex + 1].split(".");
+          const packageCommandIndex = splittedScript.indexOf(commands.package);
+          const [, packageName] = splittedScript[packageCommandIndex + 1].split(".");
 
           const packObj = sourcePackage.filter(pack => packageName.includes(pack.name))[0];
 

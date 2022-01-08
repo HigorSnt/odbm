@@ -1,15 +1,15 @@
 import * as Diff from 'diff';
-import { Function, Grant } from './models';
+import { View, Grant } from './models';
 import { commands } from './language/plsql/index';
 
-interface SanitizedFunction {
+interface SanitizedView {
   name: string;
   script: string;
   grants: string[];
 }
 
-const sanitizedObjects = (functions: Function[]): SanitizedFunction[] => {
-  return functions.map(el => <SanitizedFunction>{
+const sanitizedObjects = (views: View[]): SanitizedView[] => {
+  return views.map(el => <SanitizedView>{
       name: el.name,
       script: el.script,
       grants: el.grants.map(grant => grant.script),
@@ -17,28 +17,30 @@ const sanitizedObjects = (functions: Function[]): SanitizedFunction[] => {
   );
 };
 
-const generateFunctionSql = (sourceFunctions: Function[], targetFunctions: Function[]): string[] => {
+const generateViewSql = (sourceView: View[], targetView: View[]): string[] => {
   let scripts: string[] = [];
-  const diff = Diff.diffJson(sanitizedObjects(sourceFunctions), sanitizedObjects(targetFunctions));
+  const diff = Diff.diffJson(sanitizedObjects(sourceView), sanitizedObjects(targetView));
   const diffs = diff.filter(d => d.added || d.removed);
 
   diffs.forEach(diff => {
-    const values = diff.value.split(',').map(s => s.replace(/[{}]/g, '').trim());
+    const values = diff.value
+      .split(',')
+      .map(s => s.replace(/[{}]/g, '').trim());
 
     if (diff.added) {
       /**
        * The old database doesn't have it and the new one does.
        * As we are wanting to make the new one the same as the old one,
-       * the function must be removed and grants revoked.
+       * the view must be removed and grants revoked.
        *
        */
       values.forEach(value => {
         if (value.includes('"script"')) {
           const splittedValue = value.split(' ');
-          const functionTermIndex: number = splittedValue.indexOf(commands.function);
-          const schemaAndFunctionName: string = splittedValue[functionTermIndex + 1];
+          const viewTermIndex: number = splittedValue.indexOf(commands.view);
+          const schemaAndViewName: string = splittedValue[viewTermIndex + 1];
 
-          const dropScript = `${commands.drop} ${commands.function} ${schemaAndFunctionName};`;
+          const dropScript = `${commands.drop} ${commands.view} ${schemaAndViewName};`;
           scripts.push(dropScript);
         } else if (value.includes(commands.grant)) {
           const grants: Grant[] = [];
@@ -46,12 +48,12 @@ const generateFunctionSql = (sourceFunctions: Function[], targetFunctions: Funct
           if (value.includes('grants')) {
             const [_, grantScript] = value.split(':');
             const grantScripts: string[] = JSON.parse(grantScript);
-            grants.concat(targetFunctions
-              .map(func => func.grants.filter(grant => grantScripts.includes(grant.script)))
+            grants.concat(targetView
+              .map(view => view.grants.filter(grant => grantScripts.includes(grant.script)))
               .reduce((previous, current) => previous.concat(current)));
           } else {
-            grants.concat(targetFunctions
-              .map(func => func.grants.filter(grant => value.includes(grant.script)))
+            grants.concat(targetView
+              .map(view => view.grants.filter(grant => value.includes(grant.script)))
               .reduce((previous, current) => previous.concat(current)));
           }
 
@@ -63,7 +65,6 @@ const generateFunctionSql = (sourceFunctions: Function[], targetFunctions: Funct
           });
         }
       });
-
     } else {
       /**
        * The old db has it and the new one doesn't. So we must create in the new.
@@ -71,13 +72,13 @@ const generateFunctionSql = (sourceFunctions: Function[], targetFunctions: Funct
       values.forEach(value => {
         if (value.includes('"script"')) {
           const [, script] = value.split(':');
-          const splittedScript = script.split(" ");
-          const funtionCommandIndex = splittedScript.indexOf(commands.function);
-          const [, funcName] = splittedScript[funtionCommandIndex + 1].split(".");
+          const splittedScript = script.split(' ');
+          const viewCommandIndex = splittedScript.indexOf(commands.view);
+          const [, viewName] = splittedScript[viewCommandIndex + 1].split('.');
 
-          const funcObj = sourceFunctions.filter(func => funcName.includes(func.name))[0];
+          const viewObj = sourceView.filter(view => viewName.includes(view.name))[0];
 
-          scripts.push(funcObj.script);
+          scripts.push(viewObj.script);
         } else if (value.includes(commands.grant)) {
           const grantScripts: string[] = [];
 
@@ -97,5 +98,4 @@ const generateFunctionSql = (sourceFunctions: Function[], targetFunctions: Funct
   return scripts;
 };
 
-export default generateFunctionSql;
-
+export default generateViewSql;

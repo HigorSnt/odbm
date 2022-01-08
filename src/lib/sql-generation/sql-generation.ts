@@ -4,9 +4,15 @@ import { sourceFunctions } from './mock/functions/source';
 import { targetFunctions } from './mock/functions/target';
 import { sourcePackages } from './mock/packages/source';
 import { targetPackages } from './mock/packages/target';
+import { sourceViews } from './mock/views/source';
+import { targetViews } from './mock/views/target';
+import { sourceTrigger } from './mock/triggers/source';
+import { targetTrigger } from './mock/triggers/target';
 import generateTypeSql from './typeGeneration';
 import generateFunctionSql from './functionGeneration';
 import generatePackageSql from './packageGeneration';
+import generateViewSql from './viewGeneration';
+import generateTriggerSql from './triggerGeneration';
 
 export type Definitions = 'Types'
   | 'Functions'
@@ -33,6 +39,14 @@ export const sqlGeneration = (type: Definitions) => {
       break;
     case 'Packages':
       scripts = generatePackageSql(sourcePackages, targetPackages);
+      console.log(scripts);
+      break;
+    case 'Views':
+      scripts = generateViewSql(sourceViews, targetViews);
+      console.log(scripts);
+      break;
+    case 'Triggers':
+      scripts = generateTriggerSql(sourceTrigger, targetTrigger);
       console.log(scripts);
       break;
     default:
