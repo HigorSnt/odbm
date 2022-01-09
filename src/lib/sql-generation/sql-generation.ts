@@ -1,3 +1,4 @@
+import { Function, Package, Procedure, Sequence, Table, Trigger, Type, View } from './models';
 import { targetTypes } from './mock/types/target';
 import { sourceTypes } from './mock/types/source';
 import { sourceFunctions } from './mock/functions/source';
@@ -14,14 +15,8 @@ import { sourceSequence } from './mock/sequences/source';
 import { targetSequence } from './mock/sequences/target';
 import { sourceTables } from './mock/tables/source';
 import { targetTables } from './mock/tables/target';
-import generateTypeSql from './typeGeneration';
-import generateFunctionSql from './functionGeneration';
-import generatePackageSql from './packageGeneration';
-import generateViewSql from './viewGeneration';
-import generateTriggerSql from './triggerGeneration';
-import generateProcedureSql from './procedureGeneration';
-import generateSequenceSql from './sequenceGeneration';
-import generateTableSql from './tableGeneration';
+import { generateWithGrants, generate } from './generation';
+import { commands } from './language/plsql/index';
 
 export type Definitions = 'Types'
   | 'Functions'
@@ -33,13 +28,12 @@ export type Definitions = 'Types'
   | 'Tables';
 
 export const sqlGeneration = (type: Definitions) => {
-  let commands: string[] = [];
+  // let commands: string[] = [];
   let scripts: string[];
 
   switch (type) {
     case 'Types':
       scripts = generateTypeSql(sourceTypes, targetTypes);
-      commands = commands.concat(scripts);
       console.log(commands);
       break;
     case 'Functions':
@@ -74,3 +68,35 @@ export const sqlGeneration = (type: Definitions) => {
       throw Error('');
   }
 };
+
+const generateFunctionSql = (source: Function[], target: Function[]) => {
+  return generateWithGrants(source, target, commands.function);
+}
+
+const generatePackageSql = (source: Package[], target: Package[]) => {
+  return generateWithGrants(source, target, commands.package);
+}
+
+const generateProcedureSql = (source: Procedure[], target: Procedure[]) => {
+  return generateWithGrants(source, target, commands.procedure);
+}
+
+const generateSequenceSql = (source: Sequence[], target: Sequence[]) => {
+  return generateWithGrants(source, target, commands.sequence);
+}
+
+const generateTableSql = (source: Table[], target: Table[]) => {
+  return generateWithGrants(source, target, commands.table);
+}
+
+const generateTriggerSql = (source: Trigger[], target: Trigger[]) => {
+  return generate(source, target, commands.trigger);
+}
+
+const generateTypeSql = (source: Type[], target: Type[]) => {
+  return generateWithGrants(source, target, commands.type);
+}
+
+const generateViewSql = (source: View[], target: View[]) => {
+  return generateWithGrants(source, target, commands.view);
+}
