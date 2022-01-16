@@ -21,36 +21,39 @@ import { sourceTables } from './mock/tables/source';
 import { targetTables } from './mock/tables/target';
 
 const executeGeneration = (type: Definition) => {
+  let scripts = [];
   switch (type) {
     case 'Types':
-      console.log('executando types');
-      return generateWithGrants(sourceTypes, targetTypes, commands.type);
+      scripts = generateWithGrants(sourceTypes, targetTypes, commands.type);
       break;
     case 'Functions':
-      console.log('executando functions');
-      return generateWithGrants(sourceFunctions, targetFunctions, commands.function);
+      scripts = generateWithGrants(sourceFunctions, targetFunctions, commands.function);
       break;
     case 'Packages':
-      return generateWithGrants(sourcePackages, targetPackages, commands.package);
+      scripts = generateWithGrants(sourcePackages, targetPackages, commands.package);
       break;
     case 'Views':
-      return generateWithGrants(sourceViews, targetViews, commands.view);
+      scripts = generateWithGrants(sourceViews, targetViews, commands.view);
       break;
     case 'Triggers':
-      return generate(sourceTrigger, targetTrigger, commands.trigger);
+      scripts = generate(sourceTrigger, targetTrigger, commands.trigger);
       break;
     case 'Procedures':
-      return generateWithGrants(sourceProcedures, targetProcedures, commands.procedure);
+      scripts = generateWithGrants(sourceProcedures, targetProcedures, commands.procedure);
       break;
     case 'Sequences':
-      return generateWithGrants(sourceSequence, targetSequence, commands.sequence);
+      scripts = generateWithGrants(sourceSequence, targetSequence, commands.sequence);
       break;
     case 'Tables':
-      return generateWithGrants(sourceTables, targetTables, commands.table);
+      scripts = generateWithGrants(sourceTables, targetTables, commands.table);
       break;
     default:
       throw Error('Invalid Type');
   }
+
+  return scripts
+    .map(s => s.replace(/(^"|\r\n|\n|\r|"$)/gm, '').trim())
+    .join('\n');
 };
 
 workerpool.worker({ executeGeneration });
