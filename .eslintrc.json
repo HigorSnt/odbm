@@ -11,8 +11,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript",
     "plugin:functional/lite",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   "globals": { "BigInt": true, "console": true, "WebAssembly": true },
   "rules": {
@@ -29,6 +28,10 @@
     "sort-imports": [
       "error",
       { "ignoreDeclarationSort": true, "ignoreCase": true }
-    ]
+    ],
+    "functional/no-throw-statement": "off",
+    "functional/prefer-readonly-type": "off",
+    "functional/no-return-void": "off",
+    "@typescript-eslint/ban-types": "off"
   }
 }
