@@ -10,6 +10,7 @@ export interface Grant {
 
 export interface Type {
   name: string;
+  owner: string;
   type: string;
   script: string;
   grants: Grant[];
@@ -28,6 +29,7 @@ export interface Argument {
 
 export interface Function {
   name: string;
+  owner: string;
   status: string;
   script: string;
   arguments: Argument[];
@@ -43,6 +45,7 @@ export interface Method {
 
 export interface Package {
   name: string;
+  owner: string;
   status: string;
   script: string;
   methods: Method[];
@@ -53,13 +56,14 @@ export interface Column {
   id: string;
   name: string;
   type: string;
-  nullable: string;
+  nullable: boolean;
   comment: string;
   tableName: string;
 }
 
 export interface View {
   name: string;
+  owner: string;
   status: string;
   script: string;
   columns: Column[];
@@ -68,6 +72,7 @@ export interface View {
 
 export interface Trigger {
   name: string;
+  owner: string;
   type: string;
   event: string;
   objectBaseType: string;
@@ -80,6 +85,7 @@ export interface Trigger {
 
 export interface Procedure {
   name: string;
+  owner: string;
   status: string;
   script: string;
   arguments: Argument[];
@@ -88,11 +94,13 @@ export interface Procedure {
 
 export interface Sequence {
   name: string;
-  incrementBy: string;
-  cacheSize: string;
+  owner: string;
+  incrementBy: number;
+  cacheSize: number;
+  startWith: number;
   script: string;
-  minValue: string;
-  maxValue: string;
+  minValue: number;
+  maxValue: number;
   grants: Grant[];
 }
 
@@ -125,6 +133,7 @@ export interface Index {
 }
 
 export interface Table {
+  owner: string;
   name: string;
   comment: string;
   script: string;
