@@ -1,4 +1,4 @@
-import {
+import sqlGeneration, {
   Argument,
   Column,
   Constraint,
@@ -13,8 +13,7 @@ import {
   Trigger,
   Type,
   View,
-} from './models';
-import { sqlGeneration } from './sql-generation';
+} from './lib';
 
 export default sqlGeneration;
 
