@@ -1,5 +1,5 @@
 export interface Grant {
-  owner: string;
+  schemaName: string;
   objectName: string;
   type: string;
   grantor: string;
@@ -10,17 +10,23 @@ export interface Grant {
 
 export interface Type {
   name: string;
-  owner: string;
+  schemaName: string;
   type: string;
   script: string;
   grants: Grant[];
+}
+
+export interface Parameter {
+  name: string;
+  type: string;
+  in: boolean;
+  out: boolean;
 }
 
 export interface Argument {
   id: string;
   name: string;
   type: string;
-  inOutType: string;
   referenceType: string;
   referenceName: string;
   referenceMethod: string;
@@ -29,26 +35,23 @@ export interface Argument {
 
 export interface Function {
   name: string;
-  owner: string;
-  status: string;
+  schemaName: string;
+  replace: boolean;
+  returnType: string;
+  is: boolean;
   script: string;
-  arguments: Argument[];
+  body: string;
+  parameters: Parameter[];
   grants: Grant[];
-}
-
-export interface Method {
-  packageName: string;
-  methodId: string;
-  methodName: string;
-  arguments: Argument[];
 }
 
 export interface Package {
   name: string;
-  owner: string;
-  status: string;
+  schemaName: string;
+  replace: boolean;
+  is: boolean;
   script: string;
-  methods: Method[];
+  declarations: string;
   grants: Grant[];
 }
 
@@ -63,7 +66,7 @@ export interface Column {
 
 export interface View {
   name: string;
-  owner: string;
+  schemaName: string;
   status: string;
   script: string;
   columns: Column[];
@@ -72,7 +75,7 @@ export interface View {
 
 export interface Trigger {
   name: string;
-  owner: string;
+  schemaName: string;
   type: string;
   event: string;
   objectBaseType: string;
@@ -85,7 +88,7 @@ export interface Trigger {
 
 export interface Procedure {
   name: string;
-  owner: string;
+  schemaName: string;
   status: string;
   script: string;
   arguments: Argument[];
@@ -94,7 +97,7 @@ export interface Procedure {
 
 export interface Sequence {
   name: string;
-  owner: string;
+  schemaName: string;
   incrementBy: number;
   cacheSize: number;
   startWith: number;
@@ -105,7 +108,7 @@ export interface Sequence {
 }
 
 export interface Constraint {
-  owner: string;
+  schemaName: string;
   tableName: string;
   constraintName: string;
   relatedColumns: string;
@@ -122,7 +125,7 @@ export interface Constraint {
 
 export interface Index {
   indexName: string;
-  tableOwner: string;
+  schemaName: string;
   tableName: string;
   columns: string;
   indexType: string;
@@ -133,7 +136,7 @@ export interface Index {
 }
 
 export interface Table {
-  owner: string;
+  schemaName: string;
   name: string;
   comment: string;
   script: string;

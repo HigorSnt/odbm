@@ -273,6 +273,7 @@ const commands = Object.freeze({
   order: 'ORDER',
   organization: 'ORGANIZATION',
   oslabel: 'OSLABEL',
+  out: 'OUT',
   overflow: 'OVERFLOW',
   own: 'OWN',
   package: 'PACKAGE',

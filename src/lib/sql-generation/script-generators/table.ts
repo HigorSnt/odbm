@@ -1,17 +1,17 @@
 import { commands, constraints } from '../language/plsql';
-import { Column, Constraint, Index, Table } from '../models';
-
-import {
-  createScript as createGrantScript,
-  revokeScript as revokeGrantScript,
-} from './grant';
 import {
   columnTemplate,
   constraintsTemplate,
   dropTemplate,
   indexTemplate,
   tableTemplate,
-} from './templates';
+} from '../language/plsql/template';
+import { Column, Constraint, Index, Table } from '../models';
+
+import {
+  createScript as createGrantScript,
+  revokeScript as revokeGrantScript,
+} from './grant';
 
 export const createScript = (tableObject: Table): string => {
   const { owner, name, columns, constraints, indexes, grants } = tableObject;
@@ -30,7 +30,7 @@ export const createScript = (tableObject: Table): string => {
   tableScript.replace('<constraints>', constraintScripts);
   const grantScripts = grants.map(createGrantScript);
 
-  return `${tableName};\n${indexesScripts};\n${grantScripts.join(';\n')}`;
+  return `${tableScript};\n${indexesScripts};\n${grantScripts.join(';\n')}`;
 };
 
 const createColumnsScript = (columns: Column[]): string => {
