@@ -23,7 +23,7 @@ export const sqlGeneration = (
   type: Definition,
   sourceObject: any,
   targetObject: any
-) => {
+): string => {
   switch (type) {
     case 'Types':
       return syncTypes(sourceObject, targetObject);
@@ -36,9 +36,9 @@ export const sqlGeneration = (
     case 'Triggers':
       return syncTrigger(sourceObject, targetObject);
     case 'Procedures':
-      return syncProcedure(sourceObject, targetObject)
+      return syncProcedure(sourceObject, targetObject);
     case 'Sequences':
-      return syncSequence(sourceObject, targetObject)
+      return syncSequence(sourceObject, targetObject);
     case 'Tables':
       return syncTable(sourceObject, targetObject);
     default:
