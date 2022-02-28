@@ -1,10 +1,10 @@
 import { commands, constraints } from '../language/plsql';
 import {
-  columnTemplate,
-  constraintsTemplate,
-  dropTemplate,
-  indexTemplate,
-  tableTemplate,
+  COLUMN_TEMPLATE,
+  CONSTRAINTS_TEMPLATE,
+  DROP_TEMPLATE,
+  INDEX_TEMPLATE,
+  TABLE_TEMPLATE,
 } from '../language/plsql/template';
 import { Column, Constraint, Index, Table } from '../models';
 
@@ -14,15 +14,14 @@ import {
 } from './grant';
 
 export const createScript = (tableObject: Table): string => {
-  const { owner, name, columns, constraints, indexes, grants } = tableObject;
+  const { schemaName, name, columns, constraints, indexes, grants } = tableObject;
 
   const columnScripts = createColumnsScript(columns);
   const constraintScripts = createConstraintsScript(constraints);
   const indexesScripts = createIndexScript(indexes);
-  const tableName = owner ? `${owner}.${name}` : name;
+  const tableName = schemaName ? `${schemaName}.${name}` : name;
 
-  // eslint-disable-next-line functional/no-let
-  let tableScript = tableTemplate
+  let tableScript = TABLE_TEMPLATE
     .replace('<name>', tableName)
     .replace('<columns>', columnScripts);
 
@@ -30,7 +29,7 @@ export const createScript = (tableObject: Table): string => {
   tableScript.replace('<constraints>', constraintScripts);
   const grantScripts = grants.map(createGrantScript);
 
-  return `${tableScript};\n${indexesScripts};\n${grantScripts.join(';\n')}`;
+  return `${tableScript}\n${indexesScripts}\n${grantScripts.join('\n')}`;
 };
 
 const createColumnsScript = (columns: Column[]): string => {
@@ -40,7 +39,7 @@ const createColumnsScript = (columns: Column[]): string => {
     const { name, type, nullable } = column;
     const constraint = nullable ? constraints.notNull : '';
 
-    const columnScript = columnTemplate
+    const columnScript = COLUMN_TEMPLATE
       .replace('<column_name>', name)
       .replace('<column_type>', type)
       .replace('<column_constraint>', constraint);
@@ -60,7 +59,7 @@ const createConstraintsScript = (constraintsArr: Constraint[]): string => {
       relatedColumns,
     } = constraintElement;
 
-    const constraintScript = constraintsTemplate
+    const constraintScript = CONSTRAINTS_TEMPLATE
       .replace('<constraint_name>', constraintName)
       .replace('<constraint_type>', constraintType)
       .replace('<column_names>', `(${relatedColumns})`);
@@ -75,11 +74,11 @@ const createIndexScript = (indexes: Index[]): string => {
   const scripts = [];
 
   for (const index of indexes) {
-    const { indexName, tableOwner, tableName, columns, uniqueness } = index;
+    const { indexName, schemaName, tableName, columns, uniqueness } = index;
     const isUnique = uniqueness ? `${constraints.unique}` : '';
-    const ownerTableName = tableOwner ? `${tableOwner}.${tableName}` : tableName;
+    const ownerTableName = schemaName ? `${schemaName}.${tableName}` : tableName;
 
-    const indexScript = indexTemplate
+    const indexScript = INDEX_TEMPLATE
       .replace('<is_unique>', isUnique)
       .replace('<index_name>', indexName)
       .replace('<table_name>', ownerTableName)
@@ -92,14 +91,14 @@ const createIndexScript = (indexes: Index[]): string => {
 };
 
 export const dropScript = (tableObject: Table): string => {
-  const { owner, name, grants } = tableObject;
-  const tableName = owner ? `${owner}.${name}` : name;
+  const { schemaName, name, grants } = tableObject;
+  const tableName = schemaName ? `${schemaName}.${name}` : name;
 
-  const dropTable = dropTemplate
+  const dropTable = DROP_TEMPLATE
     .replace('<database_object>', commands.table)
     .replace('<object_name>', tableName);
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropTable};\n${revokeGrants.join(';\n')}`;
+  return `${dropTable}\n${revokeGrants.join('\n')}`;
 };

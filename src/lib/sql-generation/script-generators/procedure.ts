@@ -1,22 +1,69 @@
 import { commands } from '../language/plsql';
-import { Procedure } from '../models';
+import {
+  DROP_TEMPLATE,
+  PARAMETER_TEMPLATE,
+  PROCEDURE_TEMPLATE,
+} from '../language/plsql/template';
+import { Parameter, Procedure } from '../models';
 
-import { revokeScript as revokeGrantScript } from './grant';
-import { dropTemplate } from './templates';
+import {
+  createScript as createGrantScript,
+  revokeScript as revokeGrantScript,
+} from './grant';
 
 export const createScript = (procedureObject: Procedure): string => {
-  return procedureObject.script;
+  const {
+    replace,
+    name,
+    schemaName,
+    parameters,
+    declarations,
+    executionBody,
+    exceptionBody,
+    grants,
+  } = procedureObject;
+
+  const procedureName = schemaName ? `${schemaName}.${name}` : name;
+  const replaceValue = replace ? `${commands.or} ${commands.replace}` : '';
+  const parameterScript = createParametersScripts(parameters);
+  const grantScripts = grants.map(createGrantScript);
+
+  const procedureScript = PROCEDURE_TEMPLATE.replace('<replace>', replaceValue)
+    .replaceAll('<object_name>', procedureName)
+    .replace('<parameters>', parameterScript)
+    .replace('<declaration>', declarations.join(';\n'))
+    .replace('<execution_body>', executionBody.join(';\n'))
+    .replace('<exception_body>', exceptionBody.join(';\n'));
+
+  return `${procedureScript}\n${grantScripts.join('\n')}`;
+};
+
+const createParametersScripts = (parameters: Parameter[]): string => {
+  const scripts = [];
+
+  for (const parameter of parameters) {
+    const { name, type, in: inClause, out } = parameter;
+
+    const script = PARAMETER_TEMPLATE.replace('<parameter_name>', name)
+      .replace('<in>', inClause ? commands.in : '')
+      .replace('<out>', out ? commands.out : '')
+      .replace('<type>', type);
+    scripts.push(script);
+  }
+
+  return `(${scripts.join(', ')})`;
 };
 
 export const dropScript = (procedureObject: Procedure): string => {
-  const { name, owner, grants } = procedureObject;
-  const procedureName = owner ? `${owner}.${name}` : name;
+  const { name, schemaName, grants } = procedureObject;
+  const procedureName = schemaName ? `${schemaName}.${name}` : name;
 
-  const dropProcedure = dropTemplate
-    .replace('<database_object>', commands.procedure)
-    .replace('<object_name>', procedureName);
+  const dropProcedure = DROP_TEMPLATE.replace(
+    '<database_object>',
+    commands.procedure
+  ).replace('<object_name>', procedureName);
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropProcedure};\n${revokeGrants.join(';\n')}`;
+  return `${dropProcedure}\n${revokeGrants.join('\n')}`;
 };

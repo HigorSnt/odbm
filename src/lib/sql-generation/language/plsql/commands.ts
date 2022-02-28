@@ -114,6 +114,7 @@ const commands = Object.freeze({
   entry: 'ENTRY',
   escape: 'ESCAPE',
   except: 'EXCEPT',
+  exception: 'EXCEPTION',
   exceptions: 'EXCEPTIONS',
   exchange: 'EXCHANGE',
   excluding: 'EXCLUDING',

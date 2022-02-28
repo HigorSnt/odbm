@@ -21,7 +21,7 @@ export const createScript = (packageObject: Package): string => {
     .replace('<is_or_as>', isOrAs)
     .replace('<declarations>', declarations);
 
-  return `${packageScript}\n${grantScripts.join(';\n')}`;
+  return `${packageScript}\n${grantScripts.join('\n')}`;
 };
 
 export const dropScript = (packageObject: Package): string => {
@@ -34,5 +34,5 @@ export const dropScript = (packageObject: Package): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropPackage};\n${revokeGrants.join(';\n')}`;
+  return `${dropPackage}\n${revokeGrants.join('\n')}`;
 };

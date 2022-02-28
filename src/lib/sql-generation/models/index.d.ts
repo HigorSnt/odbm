@@ -64,34 +64,47 @@ export interface Column {
   tableName: string;
 }
 
+export interface SelectColumn {
+  name: string;
+  tableName: string;
+  joinTable: string;
+  joinType: 'JOIN' | 'LEFT JOIN' | 'RIGHT JOIN' | 'FULL JOIN';
+  joinCondition: string;
+}
+
 export interface View {
   name: string;
   schemaName: string;
-  status: string;
   script: string;
-  columns: Column[];
+  columns: SelectColumn[];
+  conditions: string;
   grants: Grant[];
 }
 
 export interface Trigger {
   name: string;
   schemaName: string;
-  type: string;
-  event: string;
-  objectBaseType: string;
-  objectBaseOwner: string;
-  objectBaseName: string;
-  triggerStatus: string;
-  status: string;
+  replace: string;
+  before: boolean;
+  event: 'INSERT' | 'UPDATE' | 'DELETE';
+  forEachRow: boolean;
+  enabled: boolean;
+  condition: string;
+  declarations: string[];
+  executionBody: string[];
+  exceptionBody: string[];
   script: string;
 }
 
 export interface Procedure {
   name: string;
   schemaName: string;
-  status: string;
+  replace: boolean;
   script: string;
-  arguments: Argument[];
+  declarations: string[];
+  executionBody: string[];
+  exceptionBody: string[];
+  parameters: Parameter[];
   grants: Grant[];
 }
 

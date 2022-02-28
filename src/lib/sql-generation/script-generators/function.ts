@@ -1,8 +1,8 @@
 import { commands } from '../language/plsql';
 import {
   DROP_TEMPLATE,
-  FUNCTION_PARAMETER_TEMPLATE,
   FUNCTION_TEMPLATE,
+  PARAMETER_TEMPLATE,
 } from '../language/plsql/template';
 import { Function, Parameter } from '../models';
 
@@ -29,7 +29,7 @@ export const createScript = (functionObject: Function): string => {
     .replace('<is_or_as>', isOrAs)
     .replace('<body>', body);
 
-  return `${functionScript}\n${grantScripts.join(';\n')}`;
+  return `${functionScript}\n${grantScripts.join('\n')}`;
 };
 
 const createParametersScripts = (parameters: Parameter[]): string => {
@@ -38,7 +38,7 @@ const createParametersScripts = (parameters: Parameter[]): string => {
   for (const parameter of parameters) {
     const { name, type, in: inClause, out } = parameter;
 
-    const script = FUNCTION_PARAMETER_TEMPLATE
+    const script = PARAMETER_TEMPLATE
       .replace('<parameter_name>', name)
       .replace('<in>', inClause ? commands.in : '')
       .replace('<out>', out ? commands.out : '')
@@ -59,5 +59,5 @@ export const dropScript = (functionObject: Function): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropFunction};\n${revokeGrants.join(';\n')}`;
+  return `${dropFunction}\n${revokeGrants.join('\n')}`;
 };

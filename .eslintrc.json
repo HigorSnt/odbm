@@ -34,6 +34,7 @@
     "functional/no-return-void": "off",
     "functional/no-loop-statement": "off",
     "functional/immutable-data": "off",
+    "functional/no-let": "off",
     "functional/functional-parameters": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-explicit-any": "off"
