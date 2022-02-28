@@ -23,16 +23,6 @@ export interface Parameter {
   out: boolean;
 }
 
-export interface Argument {
-  id: string;
-  name: string;
-  type: string;
-  referenceType: string;
-  referenceName: string;
-  referenceMethod: string;
-  referenceMethodId: string;
-}
-
 export interface Function {
   name: string;
   schemaName: string;
@@ -56,7 +46,6 @@ export interface Package {
 }
 
 export interface Column {
-  id: string;
   name: string;
   type: string;
   nullable: boolean;
@@ -143,8 +132,6 @@ export interface Index {
   columns: string;
   indexType: string;
   uniqueness: string;
-  compression: string;
-  tablespaceName: string;
   status: string;
 }
 

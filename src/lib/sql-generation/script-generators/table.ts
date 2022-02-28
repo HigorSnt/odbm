@@ -1,5 +1,6 @@
 import { commands, constraints } from '../language/plsql';
 import {
+  COLUMN_COMMENT_TEMPLATE,
   COLUMN_TEMPLATE,
   CONSTRAINTS_TEMPLATE,
   DROP_TEMPLATE,
@@ -20,6 +21,7 @@ export const createScript = (tableObject: Table): string => {
   const constraintScripts = createConstraintsScript(constraints);
   const indexesScripts = createIndexScript(indexes);
   const tableName = schemaName ? `${schemaName}.${name}` : name;
+  const columnComments = createColumnsCommentsScripts(columns);
 
   let tableScript = TABLE_TEMPLATE
     .replace('<name>', tableName)
@@ -29,10 +31,26 @@ export const createScript = (tableObject: Table): string => {
   tableScript.replace('<constraints>', constraintScripts);
   const grantScripts = grants.map(createGrantScript);
 
-  return `${tableScript}\n${indexesScripts}\n${grantScripts.join('\n')}`;
+  return `${tableScript}\n${indexesScripts}\n${grantScripts.join('\n')}\n${columnComments}`;
 };
 
 const createColumnsScript = (columns: Column[]): string => {
+  const scripts: string[] = [];
+
+  for (const column of columns) {
+    const { comment, name, tableName } = column;
+    const columnName = `${tableName}.${name}`;
+
+    const columnScript = COLUMN_COMMENT_TEMPLATE
+      .replace('<object_name>', columnName)
+      .replace('<comment>', comment);
+    scripts.push(columnScript);
+  }
+
+  return scripts.join(',');
+};
+
+const createColumnsCommentsScripts = (columns: Column[]): string => {
   const scripts: string[] = [];
 
   for (const column of columns) {
@@ -46,7 +64,7 @@ const createColumnsScript = (columns: Column[]): string => {
     scripts.push(columnScript);
   }
 
-  return scripts.join(',');
+  return scripts.join(';\n');
 };
 
 const createConstraintsScript = (constraintsArr: Constraint[]): string => {

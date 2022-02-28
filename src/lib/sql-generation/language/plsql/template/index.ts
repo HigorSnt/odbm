@@ -2,6 +2,8 @@ import { commands } from '..';
 
 export const COLUMN_TEMPLATE = `<column_name> <column_type> <column_constraint>`;
 
+export const COLUMN_COMMENT_TEMPLATE = `${commands.comment} ${commands.on} ${commands.column} <object_name> ${commands.is} '<comment>';`;
+
 export const CONSTRAINTS_TEMPLATE = `${commands.constraint} <constraint_name> <constraint_type> <column_names>`;
 
 export const TABLE_TEMPLATE = `${commands.create} ${commands.table} <name>(<columns> <constraints>);`;
