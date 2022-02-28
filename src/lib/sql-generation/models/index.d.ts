@@ -1,5 +1,5 @@
 export interface Grant {
-  owner: string;
+  schemaName: string;
   objectName: string;
   type: string;
   grantor: string;
@@ -10,50 +10,42 @@ export interface Grant {
 
 export interface Type {
   name: string;
-  owner: string;
+  schemaName: string;
   type: string;
   script: string;
   grants: Grant[];
 }
 
-export interface Argument {
-  id: string;
+export interface Parameter {
   name: string;
   type: string;
-  inOutType: string;
-  referenceType: string;
-  referenceName: string;
-  referenceMethod: string;
-  referenceMethodId: string;
+  in: boolean;
+  out: boolean;
 }
 
 export interface Function {
   name: string;
-  owner: string;
-  status: string;
+  schemaName: string;
+  replace: boolean;
+  returnType: string;
+  is: boolean;
   script: string;
-  arguments: Argument[];
+  body: string;
+  parameters: Parameter[];
   grants: Grant[];
-}
-
-export interface Method {
-  packageName: string;
-  methodId: string;
-  methodName: string;
-  arguments: Argument[];
 }
 
 export interface Package {
   name: string;
-  owner: string;
-  status: string;
+  schemaName: string;
+  replace: boolean;
+  is: boolean;
   script: string;
-  methods: Method[];
+  declarations: string;
   grants: Grant[];
 }
 
 export interface Column {
-  id: string;
   name: string;
   type: string;
   nullable: boolean;
@@ -61,40 +53,53 @@ export interface Column {
   tableName: string;
 }
 
+export interface SelectColumn {
+  name: string;
+  tableName: string;
+  joinTable: string;
+  joinType: 'JOIN' | 'LEFT JOIN' | 'RIGHT JOIN' | 'FULL JOIN';
+  joinCondition: string;
+}
+
 export interface View {
   name: string;
-  owner: string;
-  status: string;
+  schemaName: string;
   script: string;
-  columns: Column[];
+  columns: SelectColumn[];
+  conditions: string;
   grants: Grant[];
 }
 
 export interface Trigger {
   name: string;
-  owner: string;
-  type: string;
-  event: string;
-  objectBaseType: string;
-  objectBaseOwner: string;
-  objectBaseName: string;
-  triggerStatus: string;
-  status: string;
+  schemaName: string;
+  replace: string;
+  before: boolean;
+  event: 'INSERT' | 'UPDATE' | 'DELETE';
+  forEachRow: boolean;
+  enabled: boolean;
+  condition: string;
+  declarations: string[];
+  executionBody: string[];
+  exceptionBody: string[];
   script: string;
 }
 
 export interface Procedure {
   name: string;
-  owner: string;
-  status: string;
+  schemaName: string;
+  replace: boolean;
   script: string;
-  arguments: Argument[];
+  declarations: string[];
+  executionBody: string[];
+  exceptionBody: string[];
+  parameters: Parameter[];
   grants: Grant[];
 }
 
 export interface Sequence {
   name: string;
-  owner: string;
+  schemaName: string;
   incrementBy: number;
   cacheSize: number;
   startWith: number;
@@ -105,7 +110,7 @@ export interface Sequence {
 }
 
 export interface Constraint {
-  owner: string;
+  schemaName: string;
   tableName: string;
   constraintName: string;
   relatedColumns: string;
@@ -122,18 +127,16 @@ export interface Constraint {
 
 export interface Index {
   indexName: string;
-  tableOwner: string;
+  schemaName: string;
   tableName: string;
   columns: string;
   indexType: string;
   uniqueness: string;
-  compression: string;
-  tablespaceName: string;
   status: string;
 }
 
 export interface Table {
-  owner: string;
+  schemaName: string;
   name: string;
   comment: string;
   script: string;

@@ -1,11 +1,11 @@
 import { commands } from '../language/plsql';
+import { DROP_TEMPLATE, SEQUENCE_TEMPLATE } from '../language/plsql/template';
 import { Sequence } from '../models';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
 } from './grant';
-import { dropTemplate, sequenceTemplate } from './templates';
 
 export const createScript = (sequenceObject: Sequence): string => {
   const {
@@ -16,16 +16,16 @@ export const createScript = (sequenceObject: Sequence): string => {
     maxValue,
     startWith,
     grants,
-    owner,
+    schemaName,
   } = sequenceObject;
 
   const minValueClause = minValue ? `${commands.minvalue} ${minValue}` : '';
   const maxValueClause = maxValue ? `${commands.maxvalue} ${maxValue}` : '';
   const startWithClause = startWith ? `${commands.start} ${commands.with} ${startWith}` : '';
   const incrementByClause = incrementBy ? `${commands.increment} ${commands.by} ${incrementBy}` : '';
-  const sequenceName = owner ? `${owner}.${name}` : name;
+  const sequenceName = schemaName ? `${schemaName}.${name}` : name;
 
-  const sequenceScript = sequenceTemplate
+  const sequenceScript = SEQUENCE_TEMPLATE
     .replace('<sequence_name>', sequenceName)
     .replace('<min_value>', minValueClause)
     .replace('<max_value>', maxValueClause)
@@ -35,18 +35,18 @@ export const createScript = (sequenceObject: Sequence): string => {
 
   const grantScripts = grants.map(createGrantScript);
 
-  return `${sequenceScript};\n${grantScripts.join(';\n')}`;
+  return `${sequenceScript};\n${grantScripts.join('\n')}`;
 };
 
 export const dropScript = (sequenceObject: Sequence): string => {
-  const { name, owner, grants } = sequenceObject;
-  const sequenceName = owner ? `${owner}.${name}` : owner;
+  const { name, schemaName, grants } = sequenceObject;
+  const sequenceName = schemaName ? `${schemaName}.${name}` : name;
 
   const grantRevokes = grants.map(revokeGrantScript);
 
-  const sequenceDrop = dropTemplate
+  const sequenceDrop = DROP_TEMPLATE
     .replace('<database_object>', commands.sequence)
     .replace('<object_name>', sequenceName);
 
-  return `${sequenceDrop};\n${grantRevokes.join(';\n')}`;
+  return `${sequenceDrop}\n${grantRevokes.join('\n')}`;
 };
