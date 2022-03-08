@@ -1,13 +1,13 @@
 import {
-  Argument,
   Column,
   Constraint,
   Function,
   Grant,
   Index,
-  Method,
   Package,
+  Parameter,
   Procedure,
+  SelectColumn,
   Sequence,
   Table,
   Trigger,
@@ -19,15 +19,15 @@ import { sqlGeneration } from './sql-generation';
 export default sqlGeneration;
 
 export {
-  Argument,
   Column,
   Constraint,
   Function,
   Grant,
   Index,
-  Method,
   Package,
+  Parameter,
   Procedure,
+  SelectColumn,
   Sequence,
   Table,
   Trigger,

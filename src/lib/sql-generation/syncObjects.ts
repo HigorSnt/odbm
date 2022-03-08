@@ -22,13 +22,14 @@ import {
   typeGeneration,
   viewGeneration,
 } from './script-generators';
+import { Language } from './sql-generation';
 
-const formatOptions: FormatOptions = {
-  language: 'plsql',
+const formatOptions = (language: Language): FormatOptions => ({
+  language,
   uppercase: true,
-};
+});
 
-export const syncTypes = (sourceTypes: Type[], targetTypes: Type[]): string => {
+export const syncTypes = (sourceTypes: Type[], targetTypes: Type[], language: Language): string => {
   const diffs: Diff[] = generateDiff(sourceTypes, targetTypes);
   const scripts: string[] = [];
 
@@ -42,10 +43,10 @@ export const syncTypes = (sourceTypes: Type[], targetTypes: Type[]): string => {
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };
 
-export const syncFunctions = (sourceFunctions: Function[], targetFunctions: Function[]): string => {
+export const syncFunctions = (sourceFunctions: Function[], targetFunctions: Function[], language: Language): string => {
   const diffs: Diff[] = generateDiff(sourceFunctions, targetFunctions);
   const scripts: string[] = [];
 
@@ -59,10 +60,10 @@ export const syncFunctions = (sourceFunctions: Function[], targetFunctions: Func
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };
 
-export const syncPackages = (sourcePackages: Package[], targetPackages: Package[]): string => {
+export const syncPackages = (sourcePackages: Package[], targetPackages: Package[],language: Language): string => {
   const diffs: Diff[] = generateDiff(sourcePackages, targetPackages);
   const scripts: string[] = [];
 
@@ -76,10 +77,10 @@ export const syncPackages = (sourcePackages: Package[], targetPackages: Package[
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };
 
-export const syncProcedure = (sourceProcedures: Procedure[], targetProcedures: Procedure[]): string => {
+export const syncProcedure = (sourceProcedures: Procedure[], targetProcedures: Procedure[], language: Language): string => {
   const diffs: Diff[] = generateDiff(sourceProcedures, targetProcedures);
   const scripts: string[] = [];
 
@@ -93,10 +94,10 @@ export const syncProcedure = (sourceProcedures: Procedure[], targetProcedures: P
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };
 
-export const syncSequence = (sourceSequences: Sequence[], targetSequences: Sequence[]): string => {
+export const syncSequence = (sourceSequences: Sequence[], targetSequences: Sequence[], language: Language): string => {
   const diffs: Diff[] = generateDiff(sourceSequences, targetSequences);
   const scripts: string[] = [];
 
@@ -110,10 +111,10 @@ export const syncSequence = (sourceSequences: Sequence[], targetSequences: Seque
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };
 
-export const syncTable = (sourceTables: Table[], targetTables: Table[]): string => {
+export const syncTable = (sourceTables: Table[], targetTables: Table[], language: Language): string => {
   const diffs: Diff[] = generateDiff(sourceTables, targetTables);
   const scripts: string[] = [];
 
@@ -127,10 +128,10 @@ export const syncTable = (sourceTables: Table[], targetTables: Table[]): string 
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };
 
-export const syncTrigger = (sourceTriggers: Trigger[], targetTriggers: Trigger[]): string => {
+export const syncTrigger = (sourceTriggers: Trigger[], targetTriggers: Trigger[], language: Language): string => {
   const diffs: Diff[] = generateDiff(sourceTriggers, targetTriggers);
   const scripts: string[] = [];
 
@@ -144,10 +145,10 @@ export const syncTrigger = (sourceTriggers: Trigger[], targetTriggers: Trigger[]
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };
 
-export const syncView = (sourceViews: View[], targetViews: View[]): string => {
+export const syncView = (sourceViews: View[], targetViews: View[], language: Language): string => {
   const diffs: Diff[] = generateDiff(sourceViews, targetViews);
   const scripts: string[] = [];
 
@@ -161,5 +162,5 @@ export const syncView = (sourceViews: View[], targetViews: View[]): string => {
     }
   }
 
-  return format(scripts.join('\n'), formatOptions);
+  return format(scripts.join('\n'), formatOptions(language));
 };

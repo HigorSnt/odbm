@@ -1,4 +1,4 @@
-import { commands } from '..';
+import { commands } from '../commands';
 
 export const COLUMN_TEMPLATE = `<column_name> <column_type> <column_constraint>`;
 

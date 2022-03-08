@@ -1,0 +1,52 @@
+[
+  {
+    "name": "phone",
+    "schemaName": "",
+    "type": "COLLECTION",
+    "script": "CREATE OR REPLACE TYPE phone IS VARRAY(5) OF UNKNOWN;",
+    "grants": []
+  },
+  {
+    "name": "order_item_list",
+    "schemaName": "SHOP",
+    "type": "COLLECTION",
+    "script": "CREATE OR REPLACE TYPE order_item_list IS TABLE OF UNKNOWN;",
+    "grants": [
+      {
+        "schemaName": "shop",
+        "objectName": "order_item_list",
+        "type": "TYPE",
+        "grantor": "shop",
+        "grantee": "public",
+        "privilege": "DEBUG, EXECUTE",
+        "script": "GRANT DEBUG, EXECUTE ON shop.order_item_list TO public;"
+      }
+    ]
+  },
+  {
+    "name": "employee",
+    "schemaName": "",
+    "type": "OBJECT",
+    "script": "CREATE TYPE employee AS OBJECT(id NUMBER, name VARCHAR2(50), salary NUMBER, manager NUMBER, CONSTRUCTOR FUNCTION employee(p_employee_id NUMBER, p_employee_name VARCHAR2, p_salary NUMBER) RETURN SELF AS RESULT), MEMBER PROCEDURE insert_records, MEMBER PROCEDURE display_records);",
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "employee",
+        "type": "TYPE",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON employee TO public;"
+      },
+      {
+        "schemaName": "",
+        "objectName": "employee",
+        "type": "TYPE",
+        "grantor": "",
+        "grantee": "user1",
+        "privilege": "SELECT, INSERT, UPDATE, DELETE",
+        "script": "GRANT SELECT, INSERT, UPDATE, DELETE ON employee TO user1;"
+      }
+    ]
+  }
+]

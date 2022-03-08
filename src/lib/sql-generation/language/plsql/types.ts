@@ -23,6 +23,7 @@ const types = Object.freeze({
   character: 'CHARACTER',
   varchar: 'VARCHAR',
   varchar2: 'VARCHAR2(%d %s)', // VARCHAR2(maximum_size [CHAR  |  BYTE])
+  varray: 'VARRAY(%d)', // VARRAY(MAX_ELEMENTS)
   raw: 'RAW(%d)', // RAW(maximum_size)
   nchar: 'NCHAR(%d)', // NCHAR[(maximum_size)]
   nvarchar2: 'NVARCHAR2(%d)', // NVARCHAR2(maximum_size)

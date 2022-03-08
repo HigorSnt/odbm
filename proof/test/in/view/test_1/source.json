@@ -1,0 +1,53 @@
+[
+  {
+    "name": "inventory",
+    "schemaName": "",
+    "script": "CREATE VIEW inventory AS SELECT cod_prod, description FROM products WHERE price < 1000;",
+    "columns": [
+      {
+        "name": "cod_prod",
+        "tableName": "products"
+      },
+      {
+        "name": "description",
+        "tableName": "products"
+      }
+    ],
+    "conditions": "WHERE price < 1000",
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "inventory",
+        "type": "VIEW",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON order_item_list TO public;"
+      }
+    ]
+  },
+  {
+    "name": "supplier_orders",
+    "schemaName": "",
+    "script": "CREATE or REPLACE VIEW supplier_orders AS SELECT suppliers.id, orders.quantity, orders.price FROM suppliers JOIN orders ON suppliers.id = orders.supplier_id WHERE suppliers.name = 'Apple';",
+    "columns": [
+      {
+        "name": "id",
+        "tableName": "suppliers",
+        "joinType": "JOIN",
+        "joinTable": "orders",
+        "joinCondition": "suppliers.id = orders.supplier_id"
+      },
+      {
+        "name": "quantity",
+        "tableName": "orders"
+      },
+      {
+        "name": "price",
+        "tableName": "orders"
+      }
+    ],
+    "conditions": "WHERE suppliers.name = 'Apple'",
+    "grants": []
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "address",
+    "schemaName": "",
+    "type": "OBJECT",
+    "script": "CREATE OR REPLACE TYPE address AS OBJECT(street char(20), city char(20), state char(2), zip char(5));",
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "address",
+        "type": "TYPE",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON address TO public;"
+      }
+    ]
+  },
+  {
+    "name": "order_item_list",
+    "schemaName": "SHOP",
+    "type": "COLLECTION",
+    "script": "CREATE OR REPLACE TYPE order_item_list IS TABLE OF UNKNOWN;",
+    "grants": [
+      {
+        "schemaName": "shop",
+        "objectName": "order_item_list",
+        "type": "TYPE",
+        "grantor": "shop",
+        "grantee": "public",
+        "privilege": "DEBUG, EXECUTE",
+        "script": "GRANT DEBUG, EXECUTE ON shop.order_item_list TO public;"
+      }
+    ]
+  },
+  {
+    "name": "employee",
+    "schemaName": "",
+    "type": "OBJECT",
+    "script": "CREATE TYPE employee AS OBJECT(id NUMBER, name VARCHAR2(50), salary NUMBER, manager NUMBER, CONSTRUCTOR FUNCTION employee(p_employee_id NUMBER, p_employee_name VARCHAR2, p_salary NUMBER) RETURN SELF AS RESULT), MEMBER PROCEDURE insert_records, MEMBER PROCEDURE display_records);",
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "employee",
+        "type": "TYPE",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON employee TO public;"
+      },
+      {
+        "schemaName": "",
+        "objectName": "employee",
+        "type": "TYPE",
+        "grantor": "",
+        "grantee": "user1",
+        "privilege": "SELECT, INSERT, UPDATE, DELETE",
+        "script": "GRANT SELECT, INSERT, UPDATE, DELETE ON employee TO user1;"
+      }
+    ]
+  }
+]
