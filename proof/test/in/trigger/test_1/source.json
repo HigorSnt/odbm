@@ -1,0 +1,24 @@
+[
+  {
+    "name": "update_user_updated_at_column",
+    "schemaName": "",
+    "replace": true,
+    "before": true,
+    "event": "UPDATE",
+    "forEachRow": true,
+    "enabled": true,
+    "condition": "string",
+    "declarations": [],
+    "executionBody": [],
+    "exceptionBody": [],
+    "script": "string"
+  }
+]
+CREATE OR REPLACE TRIGGER department_comm_trig
+    BEFORE INSERT ON emp
+    FOR EACH ROW
+BEGIN
+    IF :NEW.deptno = 30 THEN
+        :NEW.comm := :NEW.sal * .4;
+    END IF;
+END;

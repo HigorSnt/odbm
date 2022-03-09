@@ -75,7 +75,7 @@ export interface Trigger {
   schemaName: string;
   replace: string;
   before: boolean;
-  event: 'INSERT' | 'UPDATE' | 'DELETE';
+  event: string;
   forEachRow: boolean;
   enabled: boolean;
   condition: string;
@@ -90,6 +90,7 @@ export interface Procedure {
   schemaName: string;
   replace: boolean;
   script: string;
+  is: boolean;
   declarations: string[];
   executionBody: string[];
   exceptionBody: string[];

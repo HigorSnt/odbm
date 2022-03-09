@@ -4,7 +4,7 @@
   - The `json` is referring to a named `employee` package that has no schema and has the declaration of one grant.
 
 - The `target.json` file hasn't declaration of any package.
-  - The second `json` is referring to a named `address` package that belongs to the COMPANY schema and no grant defined.
+  - The `json` is referring to a named `address` package that belongs to the COMPANY schema and no grant defined.
 
 ## Expected Result
 

@@ -21,16 +21,19 @@ export const createScript = (procedureObject: Procedure): string => {
     executionBody,
     exceptionBody,
     grants,
+    is
   } = procedureObject;
 
   const procedureName = schemaName ? `${schemaName}.${name}` : name;
   const replaceValue = replace ? `${commands.or} ${commands.replace}` : '';
+  const isOrAs = is ? `${commands.is}` : `${commands.as}`;
   const parameterScript = createParametersScripts(parameters);
   const grantScripts = grants.map(createGrantScript);
 
   const procedureScript = PROCEDURE_TEMPLATE.replace('<replace>', replaceValue)
     .replaceAll('<object_name>', procedureName)
     .replace('<parameters>', parameterScript)
+    .replace('<is_or_as>', isOrAs)
     .replace('<declaration>', declarations.join(';\n'))
     .replace('<execution_body>', executionBody.join(';\n'))
     .replace('<exception_body>', exceptionBody.join(';\n'));

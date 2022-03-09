@@ -24,7 +24,7 @@ export const PARAMETER_TEMPLATE = `<parameter_name> <in> <out> <type>`;
 
 export const PACKAGE_TEMPLATE = `${commands.create} <replace> ${commands.package} <object_name> <is_or_as> <declarations>; ${commands.end} <object_name>;`;
 
-export const PROCEDURE_TEMPLATE = `${commands.create} <replace> ${commands.procedure} <object_name> <parameters> ${commands.is} <declaration> ${commands.begin} <execution_body> ${commands.exception} <exception_body> ${commands.end} <object_name>;`;
+export const PROCEDURE_TEMPLATE = `${commands.create} <replace> ${commands.procedure} <object_name> <parameters> <declaration> <is_or_as> ${commands.begin} <execution_body> ${commands.exception} <exception_body> ${commands.end} <object_name>;`;
 
 export const TRIGGER_TEMPLATE = `${commands.create} <replace> ${commands.trigger} <object_name> <trigger_event> ${commands.on} <object_name> <each_row> <status> <condition> ${commands.declare} <declarations> ${commands.begin} <execution_body> ${commands.exception} <exception_body> ${commands.end};`;
 
