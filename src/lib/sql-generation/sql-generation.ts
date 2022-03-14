@@ -5,12 +5,10 @@ import {
   syncSequence,
   syncTable,
   syncTrigger,
-  syncTypes,
   syncView,
-} from './syncObjects';
+} from './syncObjects.js';
 
 export type Definition =
-  | 'Types'
   | 'Functions'
   | 'Packages'
   | 'Views'
@@ -19,28 +17,29 @@ export type Definition =
   | 'Sequences'
   | 'Tables';
 
+export type Language = 'plsql';
+
 export const sqlGeneration = (
   type: Definition,
+  language: Language,
   sourceObject: any,
   targetObject: any
 ): string => {
   switch (type) {
-    case 'Types':
-      return syncTypes(sourceObject, targetObject);
     case 'Functions':
-      return syncFunctions(sourceObject, targetObject);
+      return syncFunctions(sourceObject, targetObject, language);
     case 'Packages':
-      return syncPackages(sourceObject, targetObject);
+      return syncPackages(sourceObject, targetObject, language);
     case 'Views':
-      return syncView(sourceObject, targetObject);
+      return syncView(sourceObject, targetObject, language);
     case 'Triggers':
-      return syncTrigger(sourceObject, targetObject);
+      return syncTrigger(sourceObject, targetObject, language);
     case 'Procedures':
-      return syncProcedure(sourceObject, targetObject);
+      return syncProcedure(sourceObject, targetObject, language);
     case 'Sequences':
-      return syncSequence(sourceObject, targetObject);
+      return syncSequence(sourceObject, targetObject, language);
     case 'Tables':
-      return syncTable(sourceObject, targetObject);
+      return syncTable(sourceObject, targetObject, language);
     default:
       throw Error('Invalid Type');
   }

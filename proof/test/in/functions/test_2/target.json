@@ -1,0 +1,111 @@
+[
+  {
+    "name": "get_address",
+    "schemaName": "",
+    "replace": true,
+    "returnType": "VARCHAR2",
+    "is": true,
+    "script": "CREATE OR REPLACE FUNCTION get_address(person_id IN NUMBER) RETURN VARCHAR2 IS person_details VARCHAR2(130);\nBEGIN\nSELECT 'Name-'||person.first_name||' '|| person.last_name||',City-'|| address.city ||', State-'||address.state||',Country-'||address.country||', ZIP Code-'||address.zip_code INTO person_details FROM person_info person, person_address address WHERE person.id = person_id AND address.person_id = person.id;\nRETURN(person_details);\nEND get_complete_address;",
+    "body": "SELECT 'Name-'||person.first_name||' '|| person.last_name||',City-'|| address.city ||', State-'||address.state||',Country-'||address.country||', ZIP Code-'||address.zip_code INTO person_details FROM person_info person, person_address address WHERE person.id = person_id AND address.person_id = person.id;\nRETURN(person_details);",
+    "parameters": [
+      {
+        "name": "person_id",
+        "type": "NUMBER",
+        "in": true
+      }
+    ],
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "get_address",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON get_address TO public;"
+      }
+    ]
+  },
+  {
+    "name": "fsum",
+    "schemaName": "MATH_FUNCTIONS",
+    "replace": true,
+    "returnType": "NUMBER",
+    "is": true,
+    "script": "CREATE OR REPLACE FUNCTION fsum(n1 IN NUMBER, n2 IN NUMBER) RETURN NUMBER IS\nn3 number(8);\nbegin\nn3 :=n1+n2;\nreturn n3;\nend;",
+    "body": "n3:=n1+n2;\nreturn n3;",
+    "parameters": [
+      {
+        "name": "n1",
+        "type": "NUMBER",
+        "in": true
+      },
+      {
+        "name": "n2",
+        "type": "NUMBER",
+        "in": true
+      }
+    ],
+    "grants": [
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fsum",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON fsum TO public;"
+      },
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fsum",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "user1",
+        "privilege": "DEBUG",
+        "script": "GRANT DEBUG ON fsum TO user1;"
+      }
+    ]
+  },
+  {
+    "name": "fsub",
+    "schemaName": "MATH_FUNCTIONS",
+    "replace": true,
+    "returnType": "NUMBER",
+    "is": true,
+    "script": "CREATE OR REPLACE FUNCTION fsub(n1 IN NUMBER, n2 IN NUMBER) RETURN NUMBER IS\nn3 number(8);\nbegin\nn3:=n1-n2;\nreturn n3;\nend fsub;",
+    "body": "n3:=n1-n2;\nreturn n3;",
+    "parameters": [
+      {
+        "name": "n1",
+        "type": "NUMBER",
+        "in": true
+      },
+      {
+        "name": "n2",
+        "type": "NUMBER",
+        "in": true
+      }
+    ],
+    "grants": [
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fsub",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON fsub TO public;"
+      },
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fsub",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "user1",
+        "privilege": "DEBUG",
+        "script": "GRANT DEBUG ON fsub TO user1;"
+      }
+    ]
+  }
+]

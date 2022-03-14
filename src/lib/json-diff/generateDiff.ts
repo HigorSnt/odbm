@@ -1,4 +1,4 @@
-import { Diff } from './models';
+import { Diff } from './models/index.js';
 
 export const generateDiff = (oldObj: any[], newObj: any[]): Diff[] => {
   const diffs: Diff[] = [];

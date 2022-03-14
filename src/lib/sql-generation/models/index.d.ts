@@ -8,14 +8,6 @@ export interface Grant {
   script: string;
 }
 
-export interface Type {
-  name: string;
-  schemaName: string;
-  type: string;
-  script: string;
-  grants: Grant[];
-}
-
 export interface Parameter {
   name: string;
   type: string;
@@ -72,10 +64,11 @@ export interface View {
 
 export interface Trigger {
   name: string;
+  tableName: string;
   schemaName: string;
   replace: string;
   before: boolean;
-  event: 'INSERT' | 'UPDATE' | 'DELETE';
+  event: string;
   forEachRow: boolean;
   enabled: boolean;
   condition: string;
@@ -90,6 +83,7 @@ export interface Procedure {
   schemaName: string;
   replace: boolean;
   script: string;
+  is: boolean;
   declarations: string[];
   executionBody: string[];
   exceptionBody: string[];
@@ -115,10 +109,8 @@ export interface Constraint {
   constraintName: string;
   relatedColumns: string;
   constraintType: string;
-  condition: string;
-  relatedOwner: string;
-  relatedConstraintName: string;
-  deleteRule: string;
+  conditions: string[];
+  references: string;
   invalid: string;
   relatedView: string;
   status: string;
@@ -131,8 +123,7 @@ export interface Index {
   tableName: string;
   columns: string;
   indexType: string;
-  uniqueness: string;
-  status: string;
+  uniqueness: boolean;
 }
 
 export interface Table {

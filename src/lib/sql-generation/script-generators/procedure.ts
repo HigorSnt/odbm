@@ -1,41 +1,44 @@
-import { commands } from '../language/plsql';
+import { commands } from '../language/plsql/index.js';
 import {
   DROP_TEMPLATE,
   PARAMETER_TEMPLATE,
   PROCEDURE_TEMPLATE,
-} from '../language/plsql/template';
-import { Parameter, Procedure } from '../models';
+} from '../language/plsql/template/index.js';
+import { Parameter, Procedure } from '../models/index.js';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant';
+} from './grant.js';
 
 export const createScript = (procedureObject: Procedure): string => {
   const {
-    replace,
-    name,
-    schemaName,
-    parameters,
-    declarations,
-    executionBody,
-    exceptionBody,
-    grants,
+    replace = false,
+    name = '',
+    schemaName = '',
+    parameters = [],
+    declarations = [],
+    executionBody = [],
+    exceptionBody = [],
+    grants = [],
+    is = false,
   } = procedureObject;
 
   const procedureName = schemaName ? `${schemaName}.${name}` : name;
   const replaceValue = replace ? `${commands.or} ${commands.replace}` : '';
+  const isOrAs = is ? `${commands.is}` : `${commands.as}`;
   const parameterScript = createParametersScripts(parameters);
   const grantScripts = grants.map(createGrantScript);
 
   const procedureScript = PROCEDURE_TEMPLATE.replace('<replace>', replaceValue)
     .replaceAll('<object_name>', procedureName)
     .replace('<parameters>', parameterScript)
+    .replace('<is_or_as>', isOrAs)
     .replace('<declaration>', declarations.join(';\n'))
     .replace('<execution_body>', executionBody.join(';\n'))
     .replace('<exception_body>', exceptionBody.join(';\n'));
 
-  return `${procedureScript}\n${grantScripts.join('\n')}`;
+  return `${procedureScript}\n\n${grantScripts.join('\n\n')}`;
 };
 
 const createParametersScripts = (parameters: Parameter[]): string => {
@@ -55,7 +58,7 @@ const createParametersScripts = (parameters: Parameter[]): string => {
 };
 
 export const dropScript = (procedureObject: Procedure): string => {
-  const { name, schemaName, grants } = procedureObject;
+  const { name = '', schemaName = '', grants = [] } = procedureObject;
   const procedureName = schemaName ? `${schemaName}.${name}` : name;
 
   const dropProcedure = DROP_TEMPLATE.replace(
@@ -65,5 +68,5 @@ export const dropScript = (procedureObject: Procedure): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropProcedure}\n${revokeGrants.join('\n')}`;
+  return `${dropProcedure}\n\n${revokeGrants.join('\n\n')}`;
 };

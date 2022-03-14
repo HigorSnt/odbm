@@ -1,0 +1,21 @@
+[
+  {
+    "name": "employee",
+    "schemaName": "",
+    "replace": true,
+    "is": false,
+    "script": "CREATE OR REPLACE PACKAGE employee AS\nFUNCTION getFullName(employee_id NUMBER)\nRETURN VARCHAR2;\nFUNCTION get_salary(employee_id NUMBER)\nRETURN NUMBER;\nEND employee;",
+    "declarations": "FUNCTION getFullName(employee_id NUMBER)\nRETURN VARCHAR2;\nFUNCTION get_salary(employee_id NUMBER)\nRETURN NUMBER",
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "employee",
+        "type": "PACKAGE",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON employee TO public;"
+      }
+    ]
+  }
+]

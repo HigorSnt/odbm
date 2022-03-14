@@ -1,0 +1,39 @@
+[
+  {
+    "name": "insert_user",
+    "schemaName": "dashboard",
+    "replace": false,
+    "is": true,
+    "script": "CREATE OR REPLACE PROCEDURE dashboard.insert_user (id IN NUMBER, name IN VARCHAR2)\nIS\nBEGIN\nINSERT INTO user VALUES(id, name);\nEND insert_user;",
+    "declarations": [],
+    "executionBody": [
+      "INSERT INTO dashboard.user VALUES(id, name);"
+    ],
+    "exceptionBody": [],
+    "parameters": [
+      {
+        "name": "id",
+        "type": "NUMBER",
+        "in": true,
+        "out": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR2",
+        "in": true,
+        "out": false
+      }
+    ],
+    "grants": [
+      {
+        "schemaName": "dashboard",
+        "objectName": "insert_user",
+        "type": "PROCEDURE",
+        "grantor": "dashboard",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON dashboard.insert_user TO public;"
+      }
+    ]
+  }
+]
