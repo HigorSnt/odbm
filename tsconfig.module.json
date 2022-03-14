@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig",
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES2022",
     "outDir": "build/module",
-    "module": "commonjs"
+    "module": "ES2022"
   },
   "exclude": [
     "node_modules/**"

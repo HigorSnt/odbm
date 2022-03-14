@@ -1,14 +1,23 @@
-import { commands } from '../language/plsql';
-import { DROP_TEMPLATE, VIEW_TEMPLATE } from '../language/plsql/template';
-import { SelectColumn, View } from '../models';
+import { commands } from '../language/plsql/index.js';
+import {
+  DROP_TEMPLATE,
+  VIEW_TEMPLATE,
+} from '../language/plsql/template/index.js';
+import { SelectColumn, View } from '../models/index.js';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant';
+} from './grant.js';
 
 export const createScript = (viewObject: View): string => {
-  const { name, schemaName, columns, grants, conditions } = viewObject;
+  const {
+    name = '',
+    schemaName = '',
+    columns = [],
+    grants = [],
+    conditions = '',
+  } = viewObject;
 
   const viewName = schemaName ? `${schemaName}.${name}` : name;
   const columnsToSelect = generateColumnsClause(columns);
@@ -20,7 +29,7 @@ export const createScript = (viewObject: View): string => {
     .replace('<tables>', fromClause)
     .replace('<conditions>', conditions);
 
-  return `${viewScript}\n${grantScripts.join('\n')}`;
+  return `${viewScript}\n\n${grantScripts.join('\n\n')}`;
 };
 
 const generateColumnsClause = (selectColumns: SelectColumn[]): string => {
@@ -37,30 +46,35 @@ const generateColumnsClause = (selectColumns: SelectColumn[]): string => {
 const generateFromClause = (selectColumns: SelectColumn[]): string => {
   let fromClause = '';
 
-  for (const {
-    tableName,
-    joinType,
-    joinCondition,
-    joinTable,
-  } of selectColumns) {
-    if (!fromClause.includes(tableName) && !fromClause.includes(joinTable)) {
-      fromClause += `${tableName} ${joinType} ${joinTable} ${commands.on} ${joinCondition} `;
+  for (const column of selectColumns) {
+    const {
+      tableName = '',
+      joinType = '',
+      joinCondition = '',
+      joinTable = '',
+    } = column;
+    if (tableName && !fromClause.includes(tableName)) {
+      fromClause += `${tableName} `;
+      if (joinTable && !fromClause.includes(joinTable)) {
+        fromClause += `${joinType} ${joinTable} ${commands.on} ${joinCondition}, `;
+      }
+      fromClause += ', ';
     }
   }
 
-  return fromClause;
+  return fromClause.slice(0, -2);
 };
 
 export const dropScript = (viewObject: View): string => {
-  const { name, schemaName, grants } = viewObject;
+  const { name = '', schemaName = '', grants = [] } = viewObject;
   const viewName = schemaName ? `${schemaName}.${name}` : name;
 
   const dropView = DROP_TEMPLATE.replace(
     '<database_object>',
-    commands.view,
+    commands.view
   ).replace('<object_name>', viewName);
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropView}\n${revokeGrants.join('\n')}`;
+  return `${dropView}\n\n${revokeGrants.join('\n\n')}`;
 };

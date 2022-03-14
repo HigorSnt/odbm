@@ -5,12 +5,10 @@ import {
   syncSequence,
   syncTable,
   syncTrigger,
-  syncTypes,
   syncView,
-} from './syncObjects';
+} from './syncObjects.js';
 
 export type Definition =
-  | 'Types'
   | 'Functions'
   | 'Packages'
   | 'Views'
@@ -28,8 +26,6 @@ export const sqlGeneration = (
   targetObject: any
 ): string => {
   switch (type) {
-    case 'Types':
-      return syncTypes(sourceObject, targetObject, language);
     case 'Functions':
       return syncFunctions(sourceObject, targetObject, language);
     case 'Packages':

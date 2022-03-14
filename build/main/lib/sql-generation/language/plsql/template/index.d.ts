@@ -1,0 +1,15 @@
+export declare const COLUMN_TEMPLATE = "<column_name> <column_type> <column_constraint>";
+export declare const COLUMN_COMMENT_TEMPLATE: string;
+export declare const CONSTRAINTS_TEMPLATE: string;
+export declare const TABLE_TEMPLATE: string;
+export declare const INDEX_TEMPLATE: string;
+export declare const SEQUENCE_TEMPLATE: string;
+export declare const GRANT_TEMPLATE: string;
+export declare const DROP_TEMPLATE: string;
+export declare const REVOKE_GRANT_TEMPLATE: string;
+export declare const FUNCTION_TEMPLATE: string;
+export declare const PARAMETER_TEMPLATE = "<parameter_name> <in> <out> <type>";
+export declare const PACKAGE_TEMPLATE: string;
+export declare const PROCEDURE_TEMPLATE: string;
+export declare const TRIGGER_TEMPLATE: string;
+export declare const VIEW_TEMPLATE: string;

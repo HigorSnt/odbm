@@ -32,7 +32,7 @@
     "replace": true,
     "returnType": "VARCHAR2",
     "is": true,
-    "script": "CREATE OR REPLACE FUNCTION isPalindrome(string VARCHAR2)\nRETURN VARCHAR2\nIS result VARCHAR2(75);\nreversedString VARCHAR2(50);\nBEGIN\nSELECT REVERSE(string) INTO reversedString FROM DUAL;\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(inputString) = UPPER(reversedString)\nTHEN\nRETURN('true');\nEND IF;\nRETURN ('false');\nEND isPalindrome;",
+    "script": "CREATE OR REPLACE FUNCTION isPalindrome(string VARCHAR2)\nRETURN VARCHAR2\nIS\nBEGIN\nSELECT REVERSE(string) INTO reversedString FROM DUAL;\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(inputString) = UPPER(reversedString)\nTHEN\nRETURN('true');\nEND IF;\nRETURN ('false');\nEND isPalindrome;",
     "body": "SELECT REVERSE(string) INTO reversedString FROM DUAL;\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(string) = UPPER(reversedString)\nTHEN\nRETURN('true');\nEND IF;\nRETURN ('false');",
     "parameters": [
       {

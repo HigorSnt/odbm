@@ -1,0 +1,9 @@
+CREATE SEQUENCE company.engineer_id_seq MAXVALUE 800
+START WITH
+  800 INCREMENT BY -1 NOCACHE;
+
+GRANT
+SELECT
+  ON company.engineer_id_seq TO PUBLIC;
+
+DROP SEQUENCE id_seq;
