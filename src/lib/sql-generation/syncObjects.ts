@@ -3,6 +3,15 @@ import { format, FormatOptions } from 'sql-formatter';
 import { Diff, generateDiff } from '../json-diff/index.js';
 
 import {
+  functionGeneration,
+  packageGeneration,
+  procedureGeneration,
+  sequenceGeneration,
+  tableGeneration,
+  triggerGeneration,
+  viewGeneration,
+} from './generators/index.js';
+import {
   Function,
   Package,
   Procedure,
@@ -11,15 +20,6 @@ import {
   Trigger,
   View,
 } from './models/index.js';
-import {
-  functionGeneration,
-  packageGeneration,
-  procedureGeneration,
-  sequenceGeneration,
-  tableGeneration,
-  triggerGeneration,
-  viewGeneration,
-} from './script-generators/index.js';
 import { Language } from './sql-generation.js';
 
 const formatOptions = (language: Language): FormatOptions => ({
