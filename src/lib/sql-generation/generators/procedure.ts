@@ -1,15 +1,15 @@
-import { commands } from '../language/plsql/index.js';
+import { commands } from '../language/plsql';
 import {
   DROP_TEMPLATE,
   PARAMETER_TEMPLATE,
   PROCEDURE_TEMPLATE,
-} from '../language/plsql/template/index.js';
-import { Parameter, Procedure } from '../models/index.js';
+} from '../language/plsql/template';
+import { Parameter, Procedure } from '../models';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant.js';
+} from './grant';
 
 export const createScript = (procedureObject: Procedure): string => {
   const {
@@ -29,6 +29,10 @@ export const createScript = (procedureObject: Procedure): string => {
   const isOrAs = is ? `${commands.is}` : `${commands.as}`;
   const parameterScript = createParametersScripts(parameters);
   const grantScripts = grants.map(createGrantScript);
+  const exceptionBodyClause =
+    exceptionBody.length > 0
+      ? `${commands.exception} ${exceptionBody.join(';\n')}`
+      : '';
 
   const procedureScript = PROCEDURE_TEMPLATE.replace('<replace>', replaceValue)
     .replaceAll('<object_name>', procedureName)
@@ -36,7 +40,7 @@ export const createScript = (procedureObject: Procedure): string => {
     .replace('<is_or_as>', isOrAs)
     .replace('<declaration>', declarations.join(';\n'))
     .replace('<execution_body>', executionBody.join(';\n'))
-    .replace('<exception_body>', exceptionBody.join(';\n'));
+    .replace('<exception_body>', exceptionBodyClause);
 
   return `${procedureScript}\n\n${grantScripts.join('\n\n')}`;
 };
@@ -68,5 +72,5 @@ export const dropScript = (procedureObject: Procedure): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropProcedure}\n\n${revokeGrants.join('\n\n')}`;
+  return `${revokeGrants.join('\n\n')}\n\n${dropProcedure}`;
 };

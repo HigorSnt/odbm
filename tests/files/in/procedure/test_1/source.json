@@ -1,0 +1,53 @@
+[
+  {
+    "name": "hello_world",
+    "schemaName": "",
+    "replace": true,
+    "is": false,
+    "script": "CREATE OR REPLACE PROCEDURE hello_world\nAS\nBEGIN\ndbms_output.put_line('Hello World!');\nEND;",
+    "declarations": [],
+    "executionBody": [
+      "dbms_output.put_line('Hello World!');"
+    ],
+    "exceptionBody": [],
+    "parameters": [],
+    "grants": []
+  },
+  {
+    "name": "insert_user",
+    "schemaName": "dashboard",
+    "replace": false,
+    "is": true,
+    "script": "CREATE PROCEDURE dashboard.insert_user (id IN NUMBER, user_name IN VARCHAR2)\nIS\nBEGIN\nINSERT INTO user VALUES(id, user_name);\nEND insert_user;",
+    "declarations": [],
+    "executionBody": [
+      "INSERT INTO dashboard.user VALUES(id, user_name);"
+    ],
+    "exceptionBody": [],
+    "parameters": [
+      {
+        "name": "id",
+        "type": "NUMBER",
+        "in": true,
+        "out": false
+      },
+      {
+        "name": "user_name",
+        "type": "VARCHAR2",
+        "in": true,
+        "out": false
+      }
+    ],
+    "grants": [
+      {
+        "schemaName": "dashboard",
+        "objectName": "insert_user",
+        "type": "PROCEDURE",
+        "grantor": "dashboard",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON dashboard.insert_user TO public;"
+      }
+    ]
+  }
+]

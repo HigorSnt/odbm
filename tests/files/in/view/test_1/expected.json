@@ -1,0 +1,3 @@
+{
+  "result": "CREATE VIEW inventory AS\nSELECT\n  products.cod_prod,\n  products.description\nFROM\n  products\nWHERE\n  price < 1000;\n\nGRANT\nSELECT\n  ON inventory TO PUBLIC;"
+}

@@ -1,4 +1,4 @@
-import { commands, constraints } from '../language/plsql/index.js';
+import { commands, constraints } from '../language/plsql';
 import {
   COLUMN_COMMENT_TEMPLATE,
   COLUMN_TEMPLATE,
@@ -6,13 +6,13 @@ import {
   DROP_TEMPLATE,
   INDEX_TEMPLATE,
   TABLE_TEMPLATE,
-} from '../language/plsql/template/index.js';
-import { Column, Constraint, Index, Table } from '../models/index.js';
+} from '../language/plsql/template';
+import { Column, Constraint, Index, Table } from '../models';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant.js';
+} from './grant';
 
 export const createScript = (tableObject: Table): string => {
   const {
@@ -45,8 +45,10 @@ const createColumnsCommentsScripts = (columns: Column[]): string => {
   const scripts: string[] = [];
 
   for (const column of columns) {
-    const { comment, name, tableName } = column;
-    const columnName = `${tableName}.${name}`;
+    const { comment, name, tableName, schemaName } = column;
+    const columnName = schemaName
+      ? `${schemaName}.${tableName}.${name}`
+      : `${tableName}.${name}`;
 
     const columnScript = COLUMN_COMMENT_TEMPLATE.replace(
       '<object_name>',
@@ -63,7 +65,7 @@ const createColumnsScript = (columns: Column[]): string => {
 
   for (const column of columns) {
     const { name, type, nullable } = column;
-    const constraint = nullable ? constraints.notNull : '';
+    const constraint = nullable ? '' : constraints.notNull;
 
     const columnScript = COLUMN_TEMPLATE.replace('<column_name>', name)
       .replace('<column_type>', type)
@@ -139,5 +141,5 @@ export const dropScript = (tableObject: Table): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropTable}\n\n${revokeGrants.join('\n\n')}`;
+  return `${revokeGrants.join('\n\n')}\n\n${dropTable}`;
 };

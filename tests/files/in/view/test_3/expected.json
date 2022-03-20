@@ -1,0 +1,3 @@
+{
+  "result": "REVOKE\nSELECT\n  ON inventory\nFROM\n  PUBLIC;\n\nDROP VIEW inventory;"
+}

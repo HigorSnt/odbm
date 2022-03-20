@@ -6,7 +6,7 @@ import {
   syncTable,
   syncTrigger,
   syncView,
-} from './syncObjects.js';
+} from './syncObjects';
 
 export type Definition =
   | 'Functions'

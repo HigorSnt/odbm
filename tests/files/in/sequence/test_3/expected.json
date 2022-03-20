@@ -1,0 +1,3 @@
+{
+  "result": "DROP SEQUENCE id_seq;\n\nREVOKE\nSELECT\n  ON company.engineer_id_seq\nFROM\n  PUBLIC;\n\nDROP SEQUENCE company.engineer_id_seq;"
+}

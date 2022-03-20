@@ -10,7 +10,7 @@ import sqlGeneration, {
   Table,
   Trigger,
   View,
-} from './lib/index.js';
+} from './lib/index';
 
 export default sqlGeneration;
 

@@ -1,0 +1,3 @@
+{
+  "result": "CREATE SEQUENCE company.engineer_id_seq MAXVALUE 800\nSTART WITH\n  800 INCREMENT BY -1 NOCACHE;\n\nGRANT\nSELECT\n  ON company.engineer_id_seq TO PUBLIC;\n\nDROP SEQUENCE id_seq;"
+}

@@ -1,0 +1,3 @@
+{
+  "result": "CREATE\nOR REPLACE PROCEDURE hello_world () AS\nBEGIN\n  dbms_output.put_line('Hello World!');\n\nEND hello_world;\n\nCREATE PROCEDURE dashboard.insert_user (id IN NUMBER, user_name IN VARCHAR2) IS\nBEGIN\nINSERT INTO\n  dashboard.user\nVALUES\n(id, user_name);\n\nEND dashboard.insert_user;\n\nGRANT EXECUTE ON dashboard.insert_user TO PUBLIC;"
+}

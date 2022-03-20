@@ -1,0 +1,3 @@
+{
+  "result": "CREATE\nOR REPLACE TRIGGER user_updated_at_column BEFORE\nUPDATE\n  ON USER FOR EACH ROW ENABLE\nBEGIN\n  UPDATE_AT_COLUMN()\nEND;\n\nCREATE\nOR REPLACE TRIGGER university.check_age BEFORE\nINSERT\n  OR\nUPDATE\n  ON student FOR EACH ROW DISABLE\nBEGIN\n  IF :NEW.age > 90 THEN raise_application_error(-20001, 'Age should not be greater than 90');\n\nEND IF;\n\nEND;"
+}

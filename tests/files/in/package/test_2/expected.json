@@ -1,0 +1,3 @@
+{
+  "result": "CREATE\nOR REPLACE PACKAGE employee AS FUNCTION getFullName(employee_id NUMBER) RETURN VARCHAR2;\n\nFUNCTION get_salary(employee_id NUMBER) RETURN NUMBER;\n\nEND employee;\n\nGRANT EXECUTE ON employee TO PUBLIC;\n\nREVOKE EXECUTE ON company.address\nFROM\n  PUBLIC;\n\nDROP PACKAGE company.address;"
+}

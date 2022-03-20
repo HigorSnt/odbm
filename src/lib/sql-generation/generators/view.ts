@@ -1,14 +1,11 @@
-import { commands } from '../language/plsql/index.js';
-import {
-  DROP_TEMPLATE,
-  VIEW_TEMPLATE,
-} from '../language/plsql/template/index.js';
-import { SelectColumn, View } from '../models/index.js';
+import { commands } from '../language/plsql';
+import { DROP_TEMPLATE, VIEW_TEMPLATE } from '../language/plsql/template';
+import { SelectColumn, View } from '../models';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant.js';
+} from './grant';
 
 export const createScript = (viewObject: View): string => {
   const {
@@ -76,5 +73,5 @@ export const dropScript = (viewObject: View): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropView}\n\n${revokeGrants.join('\n\n')}`;
+  return `${revokeGrants.join('\n\n')}\n\n${dropView}`;
 };

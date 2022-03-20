@@ -23,6 +23,7 @@ export interface Function {
   is: boolean;
   script: string;
   body: string;
+  declarations: string[];
   parameters: Parameter[];
   grants: Grant[];
 }
@@ -43,6 +44,7 @@ export interface Column {
   nullable: boolean;
   comment: string;
   tableName: string;
+  schemaName: string;
 }
 
 export interface SelectColumn {

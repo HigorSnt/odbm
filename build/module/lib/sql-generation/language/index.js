@@ -1,3 +1,0 @@
-import * as plsql from './plsql/index.js';
-export { plsql };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9zcmMvbGliL3NxbC1nZW5lcmF0aW9uL2xhbmd1YWdlL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sS0FBSyxLQUFLLE1BQU0sa0JBQWtCLENBQUM7QUFFMUMsT0FBTyxFQUNMLEtBQUssRUFDTixDQUFBIn0=

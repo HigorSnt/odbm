@@ -1,0 +1,70 @@
+[
+  {
+    "schemaName": "company",
+    "name": "employee",
+    "comment": "",
+    "script": "CREATE TABLE employee (id NUMBER, name VARCHAR2(150), department_id NUMBER, CONSTRAINT employee_id_pk PRIMARY KEY (id), CONSTRAINT employee_department_id_fk FOREIGN KEY (department_id) REFERENCES department (id));",
+    "columns": [
+      {
+        "name": "id",
+        "type": "NUMBER",
+        "nullable": false,
+        "comment": "Employee Id",
+        "tableName": "employee"
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR2(150)",
+        "nullable": false,
+        "comment": "Employee Name",
+        "tableName": "employee"
+      },
+      {
+        "name": "department_id",
+        "type": "NUMBER",
+        "nullable": false,
+        "comment": "Employee Department Id",
+        "tableName": "employee"
+      }
+    ],
+    "indexes": [
+      {
+        "indexName": "employee_idx",
+        "schemaName": "company",
+        "tableName": "employee",
+        "columns": "id, name",
+        "indexType": "string",
+        "uniqueness": true
+      }
+    ],
+    "constraints": [
+      {
+        "schemaName": "company",
+        "tableName": "employee",
+        "constraintName": "employee_id_pk",
+        "relatedColumns": "id",
+        "constraintType": "PRIMARY KEY",
+        "conditions": [],
+        "references": "",
+        "invalid": "",
+        "relatedView": "",
+        "status": "",
+        "validated": ""
+      },
+      {
+        "schemaName": "company",
+        "tableName": "employee",
+        "constraintName": "employee_department_id_fk",
+        "relatedColumns": "department_id",
+        "constraintType": "FOREIGN KEY",
+        "conditions": [],
+        "references": "department (id)",
+        "invalid": "",
+        "relatedView": "",
+        "status": "",
+        "validated": ""
+      }
+    ],
+    "grants": []
+  }
+]

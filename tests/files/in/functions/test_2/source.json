@@ -1,0 +1,136 @@
+[
+  {
+    "name": "get_address",
+    "schemaName": "",
+    "replace": true,
+    "returnType": "VARCHAR2",
+    "is": true,
+    "script": "CREATE\nOR REPLACE FUNCTION get_address (person_id IN NUMBER) RETURN VARCHAR2 IS person_details VARCHAR2(130);\n\nBEGIN\nSELECT\n  'Name-' || person.first_name || ' ' || person.last_name || ',City-' || address.city || ', State-' || address.state || ',Country-' || address.country || ', ZIP Code-' || address.zip_code INTO person_details\nFROM\n  person_info person,\n  person_address address\nWHERE\n  person.id = person_id\n  AND address.person_id = person.id;\n\nRETURN(person_details);\n\nEND get_address;",
+    "body": "SELECT\n  'Name-' || person.first_name || ' ' || person.last_name || ',City-' || address.city || ', State-' || address.state || ',Country-' || address.country || ', ZIP Code-' || address.zip_code INTO person_details\nFROM\n  person_info person,\n  person_address address\nWHERE\n  person.id = person_id\n  AND address.person_id = person.id;\n\nRETURN(person_details);",
+    "declarations": [
+      "person_details VARCHAR2(130)"
+    ],
+    "parameters": [
+      {
+        "name": "person_id",
+        "type": "NUMBER",
+        "in": true
+      }
+    ],
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "get_address",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON get_address TO public;"
+      }
+    ]
+  },
+  {
+    "name": "isPalindrome",
+    "schemaName": "",
+    "replace": true,
+    "returnType": "VARCHAR2",
+    "is": true,
+    "script": "CREATE\nOR REPLACE FUNCTION isPalindrome (text VARCHAR2) RETURN VARCHAR2 IS\nBEGIN\nSELECT\n  REVERSE(text) INTO reversedText\nFROM\n  DUAL;\n\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(text) = UPPER(reversedText) THEN RETURN('true');\n\nEND IF;\n\nRETURN ('false');\n\nEND isPalindrome;",
+    "body": "SELECT\n  REVERSE(text) INTO reversedText\nFROM\n  DUAL;\n\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(text) = UPPER(reversedText) THEN RETURN('true');\n\nEND IF;\n\nRETURN ('false');",
+    "parameters": [
+      {
+        "name": "text",
+        "type": "VARCHAR2"
+      }
+    ],
+    "grants": []
+  },
+  {
+    "name": "fsum",
+    "schemaName": "MATH_FUNCTIONS",
+    "replace": true,
+    "returnType": "NUMBER",
+    "is": true,
+    "script": "CREATE\nOR REPLACE FUNCTION MATH_FUNCTIONS.fsum (n1 IN NUMBER, n2 IN NUMBER) RETURN NUMBER IS n3 NUMBER(8);\n\nBEGIN\n  n3 := n1 + n2;\n\nRETURN n3;\n\nEND MATH_FUNCTIONS.fsum;",
+    "body": "n3 := n1 + n2;\n\nRETURN n3;",
+    "parameters": [
+      {
+        "name": "n1",
+        "type": "NUMBER",
+        "in": true
+      },
+      {
+        "name": "n2",
+        "type": "NUMBER",
+        "in": true
+      }
+    ],
+    "declarations": [
+      "n3 NUMBER(8)"
+    ],
+    "grants": [
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fsum",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON fsum TO public;"
+      },
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fsum",
+        "type": "FUNCTION",
+        "grantor": "",
+        "grantee": "user1",
+        "privilege": "DEBUG",
+        "script": "GRANT DEBUG ON fsum TO user1;"
+      }
+    ]
+  },
+  {
+    "name": "fdiv",
+    "schemaName": "MATH_FUNCTIONS",
+    "replace": true,
+    "returnType": "NUMBER",
+    "is": true,
+    "script": "CREATE OR REPLACE FUNCTION fdiv(n1 IN NUMBER, n2 IN NUMBER) RETURN NUMBER IS\nn3 number(8);\nbegin\nn3 :=n1/n2;\nreturn n3;\nend;",
+    "body": "n3:=n1/n2;\nreturn n3;",
+    "declarations": [
+      "n3 number(8)"
+    ],
+    "parameters": [
+      {
+        "name": "n1",
+        "type": "NUMBER",
+        "in": true
+      },
+      {
+        "name": "n2",
+        "type": "NUMBER",
+        "in": true
+      }
+    ],
+    "grants": [
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fdiv",
+        "type": "FUNCTION",
+        "grantor": "MATH_FUNCTIONS",
+        "grantee": "public",
+        "privilege": "EXECUTE",
+        "script": "GRANT EXECUTE ON fdiv TO public;"
+      },
+      {
+        "schemaName": "MATH_FUNCTIONS",
+        "objectName": "fdiv",
+        "type": "FUNCTION",
+        "grantor": "MATH_FUNCTIONS",
+        "grantee": "user1",
+        "privilege": "DEBUG",
+        "script": "GRANT DEBUG ON fdiv TO user1;"
+      }
+    ]
+  }
+]
