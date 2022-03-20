@@ -1,0 +1,29 @@
+[
+  {
+    "name": "inventory",
+    "schemaName": "",
+    "script": "CREATE VIEW inventory AS\nSELECT\n  products.cod_prod,\n  products.description\nFROM\n  products\nWHERE\n  price < 1000;",
+    "columns": [
+      {
+        "name": "cod_prod",
+        "tableName": "products"
+      },
+      {
+        "name": "description",
+        "tableName": "products"
+      }
+    ],
+    "conditions": "WHERE price < 1000",
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "inventory",
+        "type": "VIEW",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON inventory TO public;"
+      }
+    ]
+  }
+]

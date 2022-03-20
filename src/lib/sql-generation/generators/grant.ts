@@ -1,8 +1,8 @@
 import {
   GRANT_TEMPLATE,
   REVOKE_GRANT_TEMPLATE,
-} from '../language/plsql/template/index.js';
-import { Grant } from '../models/index.js';
+} from '../language/plsql/template';
+import { Grant } from '../models';
 
 export const createScript = (grantObject: Grant): string => {
   const {

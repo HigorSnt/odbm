@@ -1,0 +1,3 @@
+{
+  "result": "REVOKE EXECUTE ON employee\nFROM\n  PUBLIC;\n\nDROP PACKAGE employee;\n\nREVOKE EXECUTE ON company.address\nFROM\n  PUBLIC;\n\nDROP PACKAGE company.address;"
+}

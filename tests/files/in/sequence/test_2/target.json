@@ -1,0 +1,13 @@
+[
+  {
+    "name": "id_seq",
+    "schemaName": "",
+    "incrementBy": 1,
+    "cacheSize": 5,
+    "startWith": 1,
+    "script": "CREATE SEQUENCE id_seq INCREMENT BY 1 START WITH 1 MINVALUE 1 MAXVALUE 10000 CACHE 1;",
+    "minValue": 1,
+    "maxValue": 10000,
+    "grants": []
+  }
+]

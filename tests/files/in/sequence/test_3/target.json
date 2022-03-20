@@ -1,0 +1,32 @@
+[
+  {
+    "name": "id_seq",
+    "schemaName": "",
+    "incrementBy": 1,
+    "cacheSize": 5,
+    "startWith": 1,
+    "script": "CREATE SEQUENCE id_seq INCREMENT BY 1 START WITH 1 MINVALUE 1 MAXVALUE 10000 CACHE 5;",
+    "minValue": 1,
+    "maxValue": 10000,
+    "grants": []
+  },
+  {
+    "name": "engineer_id_seq",
+    "schemaName": "company",
+    "incrementBy": -1,
+    "startWith": 800,
+    "script": "CREATE SEQUENCE company.engineer_id_seq INCREMENT BY -1 START WITH 800 MAXVALUE 800;",
+    "maxValue": 800,
+    "grants": [
+      {
+        "schemaName": "company",
+        "objectName": "engineer_id_seq",
+        "type": "SEQUENCE",
+        "grantor": "company",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON company.engineer_id_seq TO public;"
+      }
+    ]
+  }
+]

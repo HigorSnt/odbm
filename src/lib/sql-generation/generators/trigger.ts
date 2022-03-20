@@ -1,6 +1,6 @@
-import { commands } from '../language/plsql/index.js';
-import { DROP_TEMPLATE, TRIGGER_TEMPLATE } from '../language/plsql/template/index.js';
-import { Trigger } from '../models/index.js';
+import { commands } from '../language/plsql';
+import { DROP_TEMPLATE, TRIGGER_TEMPLATE } from '../language/plsql/template';
+import { Trigger } from '../models';
 
 export const createScript = (triggerObject: Trigger): string => {
   const {
@@ -26,7 +26,14 @@ export const createScript = (triggerObject: Trigger): string => {
     : '';
   const statusClause = enabled ? `${commands.enable}` : `${commands.disable}`;
   const conditionClause = condition ? `${commands.when} ${condition}` : '';
-  const declarationClause = declarations.length > 0 ? `${commands.declare} ${declarations.join(';\n')}` : '';
+  const declarationClause =
+    declarations.length > 0
+      ? `${commands.declare} ${declarations.join(';\n')}`
+      : '';
+  const exceptionClause =
+    exceptionBody.length > 0
+      ? `${commands.exception} ${exceptionBody.join(';\n')}`
+      : '';
 
   return TRIGGER_TEMPLATE.replace('<replace>', replaceValue)
     .replaceAll('<object_name>', triggerName)
@@ -37,7 +44,7 @@ export const createScript = (triggerObject: Trigger): string => {
     .replace('<condition>', conditionClause)
     .replace('<declarations>', declarationClause)
     .replace('<execution_body>', executionBody.join(';\n'))
-    .replace('<exception_body>', exceptionBody.join(';\n'));
+    .replace('<exception_body>', exceptionClause);
 };
 
 export const dropScript = (triggerObject: Trigger): string => {

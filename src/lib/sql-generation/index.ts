@@ -12,8 +12,8 @@ import {
   Table,
   Trigger,
   View,
-} from './models/index.js';
-import { sqlGeneration } from './sql-generation.js';
+} from './models/index';
+import { sqlGeneration } from './sql-generation';
 
 export default sqlGeneration;
 

@@ -1,14 +1,11 @@
-import { commands } from '../language/plsql/index.js';
-import {
-  DROP_TEMPLATE,
-  PACKAGE_TEMPLATE,
-} from '../language/plsql/template/index.js';
-import { Package } from '../models/index.js';
+import { commands } from '../language/plsql';
+import { DROP_TEMPLATE, PACKAGE_TEMPLATE } from '../language/plsql/template';
+import { Package } from '../models';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant.js';
+} from './grant';
 
 export const createScript = (packageObject: Package): string => {
   const {
@@ -44,5 +41,5 @@ export const dropScript = (packageObject: Package): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropPackage}\n\n${revokeGrants.join('\n\n')}`;
+  return `${revokeGrants.join('\n\n')}\n\n${dropPackage}`;
 };

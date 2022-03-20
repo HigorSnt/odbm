@@ -1,15 +1,15 @@
-import { commands } from '../language/plsql/index.js';
+import { commands } from '../language/plsql';
 import {
   DROP_TEMPLATE,
   FUNCTION_TEMPLATE,
   PARAMETER_TEMPLATE,
-} from '../language/plsql/template/index.js';
-import { Function, Parameter } from '../models/index.js';
+} from '../language/plsql/template';
+import { Function, Parameter } from '../models';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant.js';
+} from './grant';
 
 export const createScript = (functionObject: Function): string => {
   const {
@@ -21,6 +21,7 @@ export const createScript = (functionObject: Function): string => {
     returnType = '',
     is = false,
     body = '',
+    declarations = [],
   } = functionObject;
 
   const functionName = schemaName ? `${schemaName}.${name}` : name;
@@ -28,12 +29,15 @@ export const createScript = (functionObject: Function): string => {
   const isOrAs = is ? commands.is : commands.as;
   const parametersScripts = createParametersScripts(parameters);
   const grantScripts = grants.map(createGrantScript);
+  const declarationsClause =
+    declarations.length > 0 ? `${declarations.join(',')};` : '';
 
   const functionScript = FUNCTION_TEMPLATE.replace('<replace>', replaceValue)
     .replaceAll('<object_name>', functionName)
     .replace('<parameter>', parametersScripts)
     .replace('<return_type>', returnType)
     .replace('<is_or_as>', isOrAs)
+    .replace('<declarations>', declarationsClause)
     .replace('<body>', body);
 
   return `${functionScript}\n\n${grantScripts.join('\n\n')}`;
@@ -66,5 +70,5 @@ export const dropScript = (functionObject: Function): string => {
 
   const revokeGrants = grants.map(revokeGrantScript);
 
-  return `${dropFunction}\n\n${revokeGrants.join('\n\n')}`;
+  return `${revokeGrants.join('\n\n')}\n\n${dropFunction}`;
 };

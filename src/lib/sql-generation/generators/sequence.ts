@@ -1,14 +1,11 @@
-import { commands } from '../language/plsql/index.js';
-import {
-  DROP_TEMPLATE,
-  SEQUENCE_TEMPLATE,
-} from '../language/plsql/template/index.js';
-import { Sequence } from '../models/index.js';
+import { commands } from '../language/plsql';
+import { DROP_TEMPLATE, SEQUENCE_TEMPLATE } from '../language/plsql/template';
+import { Sequence } from '../models';
 
 import {
   createScript as createGrantScript,
   revokeScript as revokeGrantScript,
-} from './grant.js';
+} from './grant';
 
 export const createScript = (sequenceObject: Sequence): string => {
   const {
@@ -59,5 +56,5 @@ export const dropScript = (sequenceObject: Sequence): string => {
     commands.sequence
   ).replace('<object_name>', sequenceName);
 
-  return `${sequenceDrop}\n\n${grantRevokes.join('\n\n')}`;
+  return `${grantRevokes.join('\n\n')}\n\n${sequenceDrop}`;
 };

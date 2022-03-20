@@ -1,9 +1,5 @@
-import { commands } from './commands.js';
-import { constraints } from './constraints.js';
-import { types } from './types.js';
+import { commands } from './commands';
+import { constraints } from './constraints';
+import { types } from './types';
 
-export {
-  types,
-  constraints,
-  commands,
-};
+export { types, constraints, commands };

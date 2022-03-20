@@ -1,5 +1,3 @@
-import * as plsql from './plsql/index.js';
+import * as plsql from './plsql';
 
-export {
-  plsql
-}
+export { plsql };

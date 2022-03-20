@@ -1,6 +1,6 @@
 import { format, FormatOptions } from 'sql-formatter';
 
-import { Diff, generateDiff } from '../json-diff/index.js';
+import { Diff, generateDiff } from '../json-diff';
 
 import {
   functionGeneration,
@@ -10,7 +10,7 @@ import {
   tableGeneration,
   triggerGeneration,
   viewGeneration,
-} from './generators/index.js';
+} from './generators';
 import {
   Function,
   Package,
@@ -19,8 +19,8 @@ import {
   Table,
   Trigger,
   View,
-} from './models/index.js';
-import { Language } from './sql-generation.js';
+} from './models';
+import { Language } from './sql-generation';
 
 const formatOptions = (language: Language): FormatOptions => ({
   language,

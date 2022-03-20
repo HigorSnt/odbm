@@ -1,4 +1,4 @@
-import { commands } from '../commands.js';
+import { commands } from '../commands';
 
 export const COLUMN_TEMPLATE = `<column_name> <column_type> <column_constraint>`;
 
@@ -18,14 +18,14 @@ export const DROP_TEMPLATE = `${commands.drop} <database_object> <object_name>;`
 
 export const REVOKE_GRANT_TEMPLATE = `${commands.revoke} <privilege> ${commands.on} <object> ${commands.from} <user>;`;
 
-export const FUNCTION_TEMPLATE = `${commands.create} <replace> ${commands.function} <object_name> <parameter> ${commands.return} <return_type> <is_or_as> ${commands.begin} <body> ${commands.end} <object_name>;`;
+export const FUNCTION_TEMPLATE = `${commands.create} <replace> ${commands.function} <object_name> <parameter> ${commands.return} <return_type> <is_or_as> <declarations> ${commands.begin} <body> ${commands.end} <object_name>;`;
 
 export const PARAMETER_TEMPLATE = `<parameter_name> <in> <out> <type>`;
 
 export const PACKAGE_TEMPLATE = `${commands.create} <replace> ${commands.package} <object_name> <is_or_as> <declarations>; ${commands.end} <object_name>;`;
 
-export const PROCEDURE_TEMPLATE = `${commands.create} <replace> ${commands.procedure} <object_name> <parameters> <declaration> <is_or_as> ${commands.begin} <execution_body> ${commands.exception} <exception_body> ${commands.end} <object_name>;`;
+export const PROCEDURE_TEMPLATE = `${commands.create} <replace> ${commands.procedure} <object_name> <parameters> <declaration> <is_or_as> ${commands.begin} <execution_body> <exception_body> ${commands.end} <object_name>;`;
 
-export const TRIGGER_TEMPLATE = `${commands.create} <replace> ${commands.trigger} <object_name> <trigger_event> ${commands.on} <table_name> <each_row> <status> <condition> <declarations> ${commands.begin} <execution_body> ${commands.exception} <exception_body> ${commands.end};`;
+export const TRIGGER_TEMPLATE = `${commands.create} <replace> ${commands.trigger} <object_name> <trigger_event> ${commands.on} <table_name> <each_row> <status> <condition> <declarations> ${commands.begin} <execution_body> <exception_body> ${commands.end};`;
 
 export const VIEW_TEMPLATE = `${commands.create} ${commands.view} <object_name> ${commands.as} ${commands.select} <columns> ${commands.from} <tables> <conditions>;`;

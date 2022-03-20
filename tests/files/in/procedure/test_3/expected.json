@@ -1,0 +1,3 @@
+{
+  "result": "DROP PROCEDURE hello_world;\n\nREVOKE EXECUTE ON dashboard.insert_user\nFROM\n  PUBLIC;\n\nDROP PROCEDURE dashboard.insert_user;"
+}

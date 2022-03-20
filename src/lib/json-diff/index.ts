@@ -1,4 +1,4 @@
-import { generateDiff } from './generateDiff.js';
-import { Diff } from './models/index.js';
+import { generateDiff } from './generateDiff';
+import { Diff } from './models/index';
 
 export { generateDiff, Diff };
