@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE TRIGGER university.check_age BEFORE
+CREATE TRIGGER university.check_age BEFORE
 INSERT
   OR
 UPDATE

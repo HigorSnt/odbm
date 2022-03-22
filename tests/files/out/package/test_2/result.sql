@@ -1,5 +1,5 @@
 CREATE
-OR REPLACE PACKAGE employee AS FUNCTION getFullName(employee_id NUMBER) RETURN VARCHAR2;
+OR REPLACE PACKAGE employee AS FUNCTION get_full_name(employee_id NUMBER) RETURN VARCHAR2;
 
 FUNCTION get_salary(employee_id NUMBER) RETURN NUMBER;
 

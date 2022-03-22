@@ -36,9 +36,9 @@ export const createScript = (tableObject: Table): string => {
     .replace('<constraints>', constraintScripts);
   const grantScripts = grants.map(createGrantScript);
 
-  return `${tableScript}\n\n${indexesScripts}\n\n${grantScripts.join(
-    '\n\n'
-  )}\n${columnComments}`;
+  return `${tableScript}\n\n${indexesScripts}\n\n\n${columnComments}\n\n${grantScripts.join(
+    '\n'
+  )}`;
 };
 
 const createColumnsCommentsScripts = (columns: Column[]): string => {
@@ -46,15 +46,17 @@ const createColumnsCommentsScripts = (columns: Column[]): string => {
 
   for (const column of columns) {
     const { comment, name, tableName, schemaName } = column;
-    const columnName = schemaName
-      ? `${schemaName}.${tableName}.${name}`
-      : `${tableName}.${name}`;
+    if (comment) {
+      const columnName = schemaName
+        ? `${schemaName}.${tableName}.${name}`
+        : `${tableName}.${name}`;
 
-    const columnScript = COLUMN_COMMENT_TEMPLATE.replace(
-      '<object_name>',
-      columnName
-    ).replace('<comment>', comment);
-    scripts.push(columnScript);
+      const columnScript = COLUMN_COMMENT_TEMPLATE.replace(
+        '<object_name>',
+        columnName
+      ).replace('<comment>', comment);
+      scripts.push(columnScript);
+    }
   }
 
   return scripts.join('\n');

@@ -3,7 +3,7 @@
     "name": "check_age",
     "tableName": "student",
     "schemaName": "university",
-    "replace": true,
+    "replace": false,
     "before": true,
     "event": "INSERT OR UPDATE",
     "forEachRow": true,
@@ -12,6 +12,6 @@
     "declarations": [],
     "executionBody": ["IF :NEW.age>90 THEN\nraise_application_error(-20001, 'Age should not be greater than 90');\nEND IF;"],
     "exceptionBody": [],
-    "script": "CREATE OR REPLACE TRIGGER check_age\nBEFORE\nINSERT OR UPDATE ON student\nFOR EACH ROW\nBEGIN\nIF :new.Age>90 THEN\nraise_application_error(-20001, 'Age should not be greater than 90');\nEND IF;\nEND;"
+    "script": "CREATE\nOR REPLACE TRIGGER university.check_age BEFORE\nINSERT\n  OR\nUPDATE\n  ON student FOR EACH ROW DISABLE\nBEGIN\n  IF :NEW.age > 90 THEN raise_application_error(-20001, 'Age should not be greater than 90');\n\nEND IF;\n\nEND;"
   }
 ]

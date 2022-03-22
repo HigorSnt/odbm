@@ -4,7 +4,7 @@ FROM
 
 DROP FUNCTION get_address;
 
-DROP FUNCTION isPalindrome;
+DROP FUNCTION is_palindrome;
 
 REVOKE EXECUTE ON MATH_FUNCTIONS.fsum
 FROM

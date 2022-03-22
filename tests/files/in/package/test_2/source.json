@@ -4,17 +4,17 @@
     "schemaName": "",
     "replace": true,
     "is": false,
-    "script": "CREATE OR REPLACE PACKAGE employee AS\nFUNCTION getFullName(employee_id NUMBER)\nRETURN VARCHAR2;\nFUNCTION get_salary(employee_id NUMBER)\nRETURN NUMBER;\nEND employee;",
-    "declarations": "FUNCTION getFullName(employee_id NUMBER)\nRETURN VARCHAR2;\nFUNCTION get_salary(employee_id NUMBER)\nRETURN NUMBER",
+    "script": "CREATE\nOR REPLACE PACKAGE employee AS FUNCTION get_full_name(employee_id NUMBER) RETURN VARCHAR2;\n\nFUNCTION get_salary(employee_id NUMBER) RETURN NUMBER;\n\nEND employee;",
+    "declarations": "FUNCTION get_full_name(employee_id NUMBER)\nRETURN VARCHAR2;\nFUNCTION get_salary(employee_id NUMBER)\nRETURN NUMBER",
     "grants": [
       {
         "schemaName": "",
         "objectName": "employee",
         "type": "PACKAGE",
         "grantor": "",
-        "grantee": "public",
+        "grantee": "PUBLIC",
         "privilege": "EXECUTE",
-        "script": "GRANT EXECUTE ON employee TO public;"
+        "script": "GRANT EXECUTE ON employee TO PUBLIC;"
       }
     ]
   }

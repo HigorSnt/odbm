@@ -1,3 +1,3 @@
 {
-  "result": "CREATE VIEW inventory AS\nSELECT\n  products.cod_prod,\n  products.description\nFROM\n  products\nWHERE\n  price < 1000;\n\nGRANT\nSELECT\n  ON inventory TO PUBLIC;"
+  "result": "CREATE VIEW inventory AS\nSELECT\n  products.cod_prod,\n  products.description\nFROM\n  products\nWHERE\n  price < 1000;\n\nGRANT\nSELECT\n  ON inventory TO PUBLIC;\n\nCREATE VIEW shop.supplier_orders AS\nSELECT\n  suppliers.id,\n  orders.quantity,\n  orders.price\nFROM\n  suppliers\n  JOIN orders ON suppliers.id = orders.supplier_id,\nWHERE\n  suppliers.name = 'Apple';\n\nGRANT\nSELECT\n  ON shop.supplier_orders TO PUBLIC;"
 }

@@ -14,4 +14,14 @@ COMMENT ON COLUMN company.employee.employee_name IS 'Employee Name';
 
 COMMENT ON COLUMN company.employee.department_id IS 'Employee Department Id';
 
-DROP TABLE bookstore.author;
+GRANT
+SELECT
+  ON company.employee TO PUBLIC;
+
+REVOKE
+SELECT
+  ON author
+FROM
+  PUBLIC;
+
+DROP TABLE author;

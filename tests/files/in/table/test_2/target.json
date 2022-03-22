@@ -1,9 +1,9 @@
 [
   {
-    "schemaName": "bookstore",
+    "schemaName": "",
     "name": "author",
     "comment": "",
-    "script": "CREATE TABLE employee (id NUMBER, name VARCHAR2, department_id NUMBER, CONSTRAINT employee_id_pk PRIMARY KEY (id), CONSTRAINT employee_department_id_fk FOREIGN KEY (department_id) REFERENCES department (id));",
+    "script": "CREATE TABLE author(\n  id NUMBER NOT NULL,\n  author_name VARCHAR2(150) NOT NULL,\n  birth_date DATE\n);",
     "columns": [
       {
         "name": "id",
@@ -13,7 +13,7 @@
         "tableName": "author"
       },
       {
-        "name": "name",
+        "name": "author_name",
         "type": "VARCHAR2(150)",
         "nullable": false,
         "comment": "",
@@ -28,6 +28,16 @@
       }
     ],
     "indexes": [],
-    "grants": []
+    "grants": [
+      {
+        "schemaName": "",
+        "objectName": "author",
+        "type": "TABLE",
+        "grantor": "",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON author TO public;"
+      }
+    ]
   }
 ]

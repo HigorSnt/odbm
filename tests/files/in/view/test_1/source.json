@@ -25,5 +25,39 @@
         "script": "GRANT SELECT ON inventory TO public;"
       }
     ]
+  },
+  {
+    "name": "supplier_orders",
+    "schemaName": "shop",
+    "script": "CREATE or REPLACE VIEW shop.supplier_orders AS SELECT suppliers.id, orders.quantity, orders.price FROM suppliers JOIN orders ON suppliers.id = orders.supplier_id WHERE suppliers.name = 'Apple';",
+    "columns": [
+      {
+        "name": "id",
+        "tableName": "suppliers",
+        "joinType": "JOIN",
+        "joinTable": "orders",
+        "joinCondition": "suppliers.id = orders.supplier_id"
+      },
+      {
+        "name": "quantity",
+        "tableName": "orders"
+      },
+      {
+        "name": "price",
+        "tableName": "orders"
+      }
+    ],
+    "conditions": "WHERE suppliers.name = 'Apple'",
+    "grants": [
+      {
+        "schemaName": "shop",
+        "objectName": "supplier_orders",
+        "type": "VIEW",
+        "grantor": "shop",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON shop.supplier_orders TO public;"
+      }
+    ]
   }
 ]

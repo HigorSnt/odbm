@@ -23,9 +23,9 @@
         "objectName": "get_address",
         "type": "FUNCTION",
         "grantor": "",
-        "grantee": "public",
+        "grantee": "PUBLIC",
         "privilege": "EXECUTE",
-        "script": "GRANT EXECUTE ON get_address TO public;"
+        "script": "GRANT EXECUTE ON get_address TO PUBLIC;"
       }
     ]
   },
@@ -60,7 +60,7 @@
         "grantor": "MATH_FUNCTIONS",
         "grantee": "public",
         "privilege": "EXECUTE",
-        "script": "GRANT EXECUTE ON fsum TO public;"
+        "script": "GRANT EXECUTE ON MATH_FUNCTIONS.fsum TO public;"
       },
       {
         "schemaName": "MATH_FUNCTIONS",
@@ -69,7 +69,7 @@
         "grantor": "MATH_FUNCTIONS",
         "grantee": "user1",
         "privilege": "DEBUG",
-        "script": "GRANT DEBUG ON fsum TO user1;"
+        "script": "GRANT DEBUG ON MATH_FUNCTIONS.fsum TO user1;"
       }
     ]
   },
@@ -79,8 +79,8 @@
     "replace": true,
     "returnType": "NUMBER",
     "is": true,
-    "script": "CREATE OR REPLACE FUNCTION fsub(n1 IN NUMBER, n2 IN NUMBER) RETURN NUMBER IS\nn3 number(8);\nbegin\nn3:=n1-n2;\nreturn n3;\nend fsub;",
-    "body": "n3:=n1-n2;\nreturn n3;",
+    "script": "CREATE OR REPLACE FUNCTION fsub(n1 IN NUMBER, n2 IN NUMBER) RETURN NUMBER IS\nn3 NUMBER(8);\nBEGIN\nn3 := n1 - n2;\nRETURN n3;\nEND MATH_FUNCTIONS.fsub;",
+    "body": "n3 := n1 - n2;\nRETURN n3;",
     "parameters": [
       {
         "name": "n1",
@@ -93,6 +93,9 @@
         "in": true
       }
     ],
+    "declarations": [
+      "n3 NUMBER(8)"
+    ],
     "grants": [
       {
         "schemaName": "MATH_FUNCTIONS",
@@ -101,7 +104,7 @@
         "grantor": "MATH_FUNCTIONS",
         "grantee": "public",
         "privilege": "EXECUTE",
-        "script": "GRANT EXECUTE ON fsub TO public;"
+        "script": "GRANT EXECUTE ON MATH_FUNCTIONS.fsub TO public;"
       },
       {
         "schemaName": "MATH_FUNCTIONS",
@@ -110,7 +113,7 @@
         "grantor": "MATH_FUNCTIONS",
         "grantee": "user1",
         "privilege": "DEBUG",
-        "script": "GRANT DEBUG ON fsub TO user1;"
+        "script": "GRANT DEBUG ON MATH_FUNCTIONS.fsub TO user1;"
       }
     ]
   }

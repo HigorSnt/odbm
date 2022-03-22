@@ -5,7 +5,7 @@
     "incrementBy": 1,
     "cacheSize": 5,
     "startWith": 1,
-    "script": "CREATE SEQUENCE id_seq INCREMENT BY 1 START WITH 1 MINVALUE 1 MAXVALUE 10000 CACHE 1;",
+    "script": "CREATE SEQUENCE id_seq MINVALUE 1 MAXVALUE 10000\nSTART WITH\n  1 INCREMENT BY 1 CACHE 5;",
     "minValue": 1,
     "maxValue": 10000,
     "grants": []

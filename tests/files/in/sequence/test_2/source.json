@@ -4,7 +4,7 @@
     "schemaName": "company",
     "incrementBy": -1,
     "startWith": 800,
-    "script": "CREATE SEQUENCE company.engineer_id_seq INCREMENT BY -1 START WITH 800 MAXVALUE 800;",
+    "script": "CREATE SEQUENCE company.engineer_id_seq MAXVALUE 800\nSTART WITH\n  800 INCREMENT BY -1 NOCACHE;",
     "maxValue": 800,
     "grants": [
       {

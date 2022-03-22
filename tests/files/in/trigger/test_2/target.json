@@ -12,6 +12,6 @@
     "declarations": [],
     "executionBody": ["UPDATE_AT_COLUMN()"],
     "exceptionBody": [],
-    "script": "CREATE OR REPLACE TRIGGER user_updated_at_column\nBEFORE UPDATE ON user\nFOR EACH ROW\nBEGIN\nUPDATE_AT_COLUMN();\nEND;"
+    "script": "CREATE\nOR REPLACE TRIGGER user_updated_at_column BEFORE\nUPDATE\n  ON USER FOR EACH ROW ENABLE\nBEGIN\n  UPDATE_AT_COLUMN()\nEND;"
   }
 ]

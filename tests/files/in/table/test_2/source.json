@@ -3,7 +3,7 @@
     "schemaName": "company",
     "name": "employee",
     "comment": "",
-    "script": "CREATE TABLE employee (id NUMBER, employee_name VARCHAR2(150), department_id NUMBER, CONSTRAINT employee_id_pk PRIMARY KEY (id), CONSTRAINT employee_department_id_fk FOREIGN KEY (department_id) REFERENCES department (id));",
+    "script": "CREATE TABLE company.employee(\n  id NUMBER NOT NULL,\n  employee_name VARCHAR2(150) NOT NULL,\n  department_id NUMBER NOT NULL,\n  CONSTRAINT employee_id_pk PRIMARY KEY (id),\n  CONSTRAINT employee_department_id_fk FOREIGN KEY (department_id) REFERENCES department (id)\n);",
     "columns": [
       {
         "name": "id",
@@ -68,6 +68,16 @@
         "validated": ""
       }
     ],
-    "grants": []
+    "grants": [
+      {
+        "schemaName": "company",
+        "objectName": "employee",
+        "type": "TABLE",
+        "grantor": "company",
+        "grantee": "public",
+        "privilege": "SELECT",
+        "script": "GRANT SELECT ON company.employee TO public;"
+      }
+    ]
   }
 ]

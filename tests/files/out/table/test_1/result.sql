@@ -13,3 +13,17 @@ COMMENT ON COLUMN company.employee.id IS 'Employee Id';
 COMMENT ON COLUMN company.employee.employee_name IS 'Employee Name';
 
 COMMENT ON COLUMN company.employee.department_id IS 'Employee Department Id';
+
+GRANT
+SELECT
+  ON company.employee TO PUBLIC;
+
+CREATE TABLE author(
+  id NUMBER NOT NULL,
+  author_name VARCHAR2(150) NOT NULL,
+  birth_date DATE
+);
+
+GRANT
+SELECT
+  ON author TO PUBLIC;

@@ -4,7 +4,7 @@
     "schemaName": "",
     "replace": true,
     "is": false,
-    "script": "CREATE OR REPLACE PROCEDURE hello_world\nAS\nBEGIN\ndbms_output.put_line('Hello World!');\nEND;",
+    "script": "CREATE\nOR REPLACE PROCEDURE hello_world () AS\nBEGIN\n  dbms_output.put_line('Hello World!');\n\nEND hello_world;",
     "declarations": [],
     "executionBody": [
       "dbms_output.put_line('Hello World!');"
@@ -17,9 +17,9 @@
         "objectName": "hello_world",
         "type": "PROCEDURE",
         "grantor": "",
-        "grantee": "public",
+        "grantee": "PUBLIC",
         "privilege": "EXECUTE",
-        "script": "GRANT EXECUTE ON hello_world TO public;"
+        "script": "GRANT EXECUTE ON hello_world TO PUBLIC;"
       }
     ]
   }

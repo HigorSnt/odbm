@@ -23,19 +23,19 @@
         "objectName": "get_address",
         "type": "FUNCTION",
         "grantor": "",
-        "grantee": "public",
+        "grantee": "PUBLIC",
         "privilege": "EXECUTE",
-        "script": "GRANT EXECUTE ON get_address TO public;"
+        "script": "GRANT EXECUTE ON get_address TO PUBLIC;"
       }
     ]
   },
   {
-    "name": "isPalindrome",
+    "name": "is_palindrome",
     "schemaName": "",
     "replace": true,
     "returnType": "VARCHAR2",
     "is": true,
-    "script": "CREATE\nOR REPLACE FUNCTION isPalindrome (text VARCHAR2) RETURN VARCHAR2 IS\nBEGIN\nSELECT\n  REVERSE(text) INTO reversedText\nFROM\n  DUAL;\n\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(text) = UPPER(reversedText) THEN RETURN('true');\n\nEND IF;\n\nRETURN ('false');\n\nEND isPalindrome;",
+    "script": "CREATE\nOR REPLACE FUNCTION is_palindrome (text VARCHAR2) RETURN VARCHAR2 IS\nBEGIN\nSELECT\n  REVERSE(text) INTO reversedText\nFROM\n  DUAL;\n\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(text) = UPPER(reversedText) THEN RETURN('true');\n\nEND IF;\n\nRETURN ('false');\n\nEND is_palindrome;",
     "body": "SELECT\n  REVERSE(text) INTO reversedText\nFROM\n  DUAL;\n\n-- Using UPPER to ignore case sensitivity.\nIF UPPER(text) = UPPER(reversedText) THEN RETURN('true');\n\nEND IF;\n\nRETURN ('false');",
     "parameters": [
       {
@@ -76,7 +76,7 @@
         "grantor": "MATH_FUNCTIONS",
         "grantee": "public",
         "privilege": "EXECUTE",
-        "script": "GRANT EXECUTE ON fsum TO public;"
+        "script": "GRANT EXECUTE ON MATH_FUNCTIONS.fsum TO public;"
       },
       {
         "schemaName": "MATH_FUNCTIONS",
@@ -85,7 +85,7 @@
         "grantor": "MATH_FUNCTIONS",
         "grantee": "user1",
         "privilege": "DEBUG",
-        "script": "GRANT DEBUG ON fsum TO user1;"
+        "script": "GRANT DEBUG ON MATH_FUNCTIONS.fsum TO user1;"
       }
     ]
   }
