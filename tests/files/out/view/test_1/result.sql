@@ -18,7 +18,7 @@ SELECT
   orders.price
 FROM
   suppliers
-  JOIN orders ON suppliers.id = orders.supplier_id,
+  JOIN orders ON suppliers.id = orders.supplier_id
 WHERE
   suppliers.name = 'Apple';
 

@@ -53,7 +53,7 @@ const generateFromClause = (selectColumns: SelectColumn[]): string => {
     if (tableName && !fromClause.includes(tableName)) {
       fromClause += `${tableName} `;
       if (joinTable && !fromClause.includes(joinTable)) {
-        fromClause += `${joinType} ${joinTable} ${commands.on} ${joinCondition}, `;
+        fromClause += `${joinType} ${joinTable} ${commands.on} ${joinCondition}`;
       }
       fromClause += ', ';
     }
