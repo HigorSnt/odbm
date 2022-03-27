@@ -1,6 +1,6 @@
 {
-  "name": "dbs",
-  "version": "0.0.1-beta",
+  "name": "dbs-sync",
+  "version": "0.0.1",
   "types": "build/main/index.d.ts",
   "description": "Database Synchronizer",
   "main": "build/main/index.js",
